@@ -7,7 +7,7 @@ content:
   sources:
     - url: .
       start_path: content
-      branches: [v19-updates-summit-connect]
+      branches: [v19-ja]
 
 ui:
   bundle:
