@@ -7,73 +7,73 @@
 
 == Introduction to the Lab
 
-Thanks for taking the time to learn about and use RHEL AI at Red Hat Summit Connect. During this hands-on exercise, you will learn what https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI] is and how you can use it to provide value to your company. You will also learn how to leverage RHEL AI to improve a Large Language Model (LLM), and train it using synthetic data generation.  RHEL AI consists of several core components:
+Red Hat Summit Connect で RHEL AI について学び、使用するために時間を割いていただきありがとうございます。この実践的な演習では、https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI] とは何か、そしてそれを使用して企業に価値を提供する方法を学びます。また、RHEL AI を活用して大規模言語モデル (LLM) を改善し、合成データ生成を使用してトレーニングする方法も学習します。  RHEL AI はいくつかのコアコンポーネントで構成されています。:
 
 . https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode[RHEL Image Mode]
 . The https://www.ibm.com/granite[Granite] Large Language Model(s)
 . https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] for model alignment
 . Support and indemnification from Red Hat
 
-https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] is a fully open-source project from Red Hat, and the MIT-IBM Watson AI Lab, that introduces https://arxiv.org/abs/2403.01081[Large-scale Alignment for chatBots] (LAB). The project's innovation helps during the instruction-tuning phase of LLM training. However, to fully understand the benefit of this project, you need to be familiar with some basic concepts of what an LLM is and the difficulty and cost associated with training a model.
+https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] は、Red Hat と MIT-IBM Watson AI Lab による完全なオープンソース プロジェクトです。MIT-IBM Watson AI Labは https:// arxiv.org/abs/2403.01081[Large-scale Alignment for chatBots] (LAB)（チャットボットの大規模調整）を発表しました。このプロジェクトのイノベーションは、LLM トレーニングの指導調整段階で役立ちます。ただし、このプロジェクトの利点を完全に理解するには、LLM とは何か、モデルのトレーニングに関連する難しさとコストについて、いくつかの基本概念を理解しておく必要があります。
 
 [#llms]
 === What is a Large Language Model?
 
-A large language model (LLM) is a type of artificial intelligence (AI) model that uses deep learning techniques to understand and generate human-like text based on input data. These models are designed to analyze vast amounts of text data and learn patterns, relationships, and structures within the data. They can be used for various natural language processing (NLP) tasks, such as:
+大規模言語モデル (large language model: LLM) は、深層学習技術 (deep learning techniques) を使用して入力データに基づいて人間のようなテキストを理解して生成する人工知能 (artificial intelligence: AI) モデルの一種です。これらのモデルは、膨大な量のテキスト データを分析し、データ内のパターン、関係、構造を学習するように設計されています。これらは、次のようなさまざまな自然言語処理 (natural language processing: NLP) タスクに使用できます。:
 
-* *Text classification*: Categorizing text based on its content, such as spam detection or sentiment analysis.
-* *Text summarization*: Generating concise summaries of longer texts, such as news articles or research papers.
-* *Machine translation*: Translating text from one language to another, such as English to French or German to Chinese.
-* *Question answering*: Answering questions based on a given context or set of documents.
-* *Text generation*: Creating new text that is coherent, contextually relevant, and grammatically correct, such as writing articles, stories, or even poetry.
+* *Text classification*: スパム検出や感情分析など、内容に基づいてテキストを分類します。
+* *Text summarization*: ニュース記事や研究論文など、長いテキストの簡潔な要約を生成します。
+* *Machine translation*: 英語からフランス語、ドイツ語から中国語など、ある言語から別の言語へのテキストの翻訳します。
+* *Question answering*: 特定のコンテキストまたは一連の文書に基づいて質問に回答します。
+* *Text generation*: 記事、物語、さらには詩を書くなど、一貫性があり、文脈に関連性があり、文法的に正しい新しいテキストを作成します。
 
-Large language models typically have many parameters (millions to billions) that allow them to capture complex linguistic patterns and relationships in the data. They are trained on large datasets, such as books, articles, and websites, using techniques like unsupervised pre-training and supervised fine-tuning. Some popular large language models include GPT-4, Llama, and Mistral.
+大規模な言語モデルには通常、データ内の複雑な言語パターンと関係を捉えることを可能にする多くのパラメーター (数百万から数十億) があります。これらは、教師なし事前トレーニングや教師あり微調整などの手法を使用して、書籍、記事、Web サイトなどの大規模なデータセットでトレーニングされます。人気のある大規模言語モデルには、GPT-4、Llama、Mistral などがあります。
 
-In summary, a large language model (LLM) is an artificial intelligence model that uses deep learning techniques to understand and generate human-like text based on input data. They are designed to analyze vast amounts of text data and learn patterns, relationships, and structures within the data, and can be used for various natural language processing tasks.
+要約すると、大規模言語モデル (LLM) は、深層学習技術を使用して、入力データに基づいて人間のようなテキストを理解して生成する人工知能モデルです。これらは、膨大な量のテキスト データを分析し、データ内のパターン、関係、構造を学習するように設計されており、さまざまな自然言語処理タスクに使用できます。
 
-NOTE: To give you an idea of what an LLM can accomplish, the entire previous section was generated with a simple question against the foundational model you are using in this workshop.
+NOTE: LLM が何を達成できるかを理解していただくために、このセクション全体は、ワークショップで使用している基本モデルに対する簡単な質問で生成しました。
 
 [#how_trained]
 === How are Large Language Models trained?
 
-Large language models (LLMs) are typically trained using deep learning techniques and large datasets. The training process involves several steps:
+大規模言語モデル (LLM) は通常、深層学習技術と大規模なデータセットを使用してトレーニングされます。トレーニングプロセスにはいくつかのステップが含まれます。:
 
-. *Data Collection*: A vast amount of text data is collected from various sources, such as books, articles, websites, and databases. The data may include different languages, domains, and styles to ensure the model can generalize well.
-. *Pre-processing*: The raw text data is pre-processed to remove noise, inconsistencies, and irrelevant information. This may include tokenization, lowercasing, stemming, lemmatization, and encoding.
-. *Tokenization*: The pre-processed text data is converted into tokens (words or subwords) that can be used as input and output to the model. Some models use byte-pair encoding (BPE) or subword segmentation to create tokens that can handle out-of-vocabulary words and maintain contextual information.
-. *Pre-training*: The model is trained in an unsupervised or self-supervised manner to learn patterns and structures in the data.
-. *Model Alignment*: (instruction tuning and preference tuning): The process of encoding human values and goals into large language models to make them as helpful, safe, and reliable as possible. This step is not as compute intensive as some of the other steps.
+. *Data Collection*: 膨大な量のテキスト データが書籍、記事、Web サイト、データベースなどのさまざまなソースから収集されます。モデルを適切に一般化できるように、データにはさまざまな言語、ドメイン、スタイルが含まれる場合があります。
+. *Pre-processing*: 生のテキスト データは前処理され、ノイズ、不一致、無関係な情報が除去されます。これには、トークン化、小文字化、ステミング、見出し語化、およびエンコードが含まれる場合があります。
+. *Tokenization*: 前処理されたテキスト データは、モデルへの入力および出力として使用できるトークン (単語またはサブワード) に変換されます。一部のモデルでは、バイト ペア エンコーディング (BPE) またはサブワード セグメンテーションを使用して、語彙外の単語を処理し、コンテキスト情報を維持できるトークンを作成します。
+. *Pre-training*: モデルは教師なしまたは自己教師ありの方法でトレーニングされ、データ内のパターンと構造を学習します。
+. *Model Alignment*: (命令チューニングとプリファレンスチューニング): 人間の価値観と目標を大規模な言語モデルにエンコードして、可能な限り役立つ、安全、信頼できるものにするプロセス。このステップは、他の一部のステップほど計算集約的ではありません。
 
 [#instructlab]
 === How does this relate to InstructLab?
 
-InstructLab leverages a taxonomy-guided synthetic data generation process and a multi-phase tuning framework. This allows InstructLab to significantly reduce reliance on expensive human annotations, making contributing to a large language model easy and accessible. This means that InstructLab can use the LLM to generate data, which is then used to further train the LLM. It also means that the alignment phase becomes most user’s starting point for contributing their knowledge.  Prior to the LAB technique, users typically had no direct involvement in training an LLM. I know this may sound complicated, but hang in there. You will see how easy this is to use.
+InstructLab は、分類学に基づいた合成データ生成プロセスとマルチフェーズ チューニングフレームワークを活用しています。これにより、InstructLab は高価な人間による注釈への依存を大幅に削減し、大規模な言語モデルへの貢献が簡単かつアクセスしやすくなります。これは、InstructLab が LLM を使用してデータを生成し、そのデータを使用して LLM をさらにトレーニングできることを意味します。これは、調整フェーズがほとんどのユーザーにとって知識を提供するための出発点になることも意味します。  LAB 手法が導入される前は、通常、ユーザーは LLM のトレーニングに直接関与していませんでした。複雑に聞こえるかもしれませんが、ちょっと待ってください、これからこれがいかに使いやすいかがわかるでしょう。
 
-As you work with InstructLab, you will see the terms Skills and Knowledge. What is the difference between Skills and Knowledge? A simple analogy is to think of a skill as teaching someone how to fish. Knowledge, on the other hand, is knowing that the best place to catch a Bass is when the sun is setting while casting your line near the trunk of a tree along the bank.
+InstructLab を使用していると、スキルと知識という用語が表示されます。スキルと知識の違いは何ですか?簡単な例えとしては、スキルを誰かに釣り方を教えることだと考えてください。一方、知識とは、バスを釣るのに、最適な場所は日が沈む時間帯で、岸沿いの木の幹の近くにラインをキャストすることを知っていることです。
 
 [#getting_started]
 == Getting started with InstructLab
 
 === Install the ilab command line interface
 
-We created a CLI tool called https://github.com/instructlab/instructlab[ilab] that implements a local LLM developer experience and workflow. The ilab CLI is written in Python and works on the following architectures:
+私たちは、ローカル LLM 開発者エクスペリエンスとワークフローを実装する https://github.com/instructlab/instructlab[ilab] という CLI ツールを作成しました。 ilab CLI は Python で書かれており、次のアーキテクチャで動作します。:
 
 . Apple M1/M2/M3 Mac
 . Linux systems
 
-We anticipate support for more operating systems in the future. The system requirements to use the command line tool are as follows:
+将来的には、さらに多くのオペレーティング システムがサポートされる予定です。コマンドラインツールを使用するためのシステム要件は次のとおりです。:
 
 . C++ compiler
 . Python 3.9+
 . Approximately 60GB disk space (entire process)
-.. Disk space requirements are dependent on several factors. Keep in mind that we will be generating data to feed to the model while also having the model locally on our system. For example, the model we are working with during this workshop is roughly 5gb in size.
+.. ディスク容量の要件は、いくつかの要因によって異なります。モデルをシステム上にローカルに置きながら、モデルにフィードするデータを生成することに注意してください。たとえば、このワークショップで使用しているモデルのサイズは約 5 GB です。
 
 [#installation]
 === Installing ilab
 
-The first thing we need to do is to source a Python virtual environment that will allow us to interact with the InstructLab command line tools. While you have two terminal windows available on your right, let's start with the *upper* window. 
+最初に行う必要があるのは、InstructLab コマンド ライン ツールと対話できるようにする Python 仮想環境を調達することです。右側に 2 つのターミナル ウィンドウが表示されますが、*上の* ウィンドウから始めましょう。
 
-. Activate the python virtual environment by running the following commands:
+. 次のコマンドを実行して、Python 仮想環境をアクティブ化します。:
 +
 
 [source,sh,role=execute,subs=attributes+]
@@ -82,7 +82,7 @@ cd ~/instructlab
 source venv/bin/activate
 ----
 +
-.Your Prompt should now look like this
+.プロンプトは次のようになります。
 
 [subs=quotes]
 ----
@@ -100,10 +100,10 @@ source venv/bin/activate
 // ----
 // +
 
-// NOTE: `pip install` may take some time, depending on the internet connection available at the conference or if the files have been cached locally.
+// NOTE: インターネット接続やファイルがローカルにキャッシュされているかどうかによっては、 `pip install` に時間がかかる場合があります。
 
 [start=2]
-. From your venv environment, verify ilab is installed correctly by running the ilab command.
+. venv 環境から ilab コマンドを実行して、ilab が正しくインストールされていることを確認します。
 +
 
 [source,sh,role=execute,subs=attributes+]
@@ -112,7 +112,7 @@ ilab
 ----
 +
 
-Assuming that everything has been installed correctly, you should see the following output:
+すべてが正しくインストールされていると仮定すると、次の出力が表示されるはずです。:
 +
 
 [subs=quotes]
@@ -148,19 +148,19 @@ Commands:
 ----
 
 
-*Congratulations!* You now have everything installed and are ready to dive into the world of LLM alignment!
+*Congratulations!* これですべてがインストールされ、LLM アライメントの世界に飛び込む準備が整いました。
 
 [#initialize]
 === Initialize ilab
 
-Now that we know that the command-line interface `ilab` is working correctly, the next thing we need to do is initialize the local environment so that we can begin working with the model. This is accomplished by issuing a simple init command. Initialize `ilab` by running the following command:
+コマンドライン インターフェイス「ilab」が正しく動作していることがわかったので、次に行う必要があるのは、モデルの操作を開始できるようにローカル環境を初期化することです。これは、単純な init コマンドを発行することで実現されます。次のコマンドを実行して「ilab」を初期化します。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab config init
 ----
 
-.You should see the following output:
+.次の出力が表示されるはずです:
 
 [subs=quotes]
 ----
@@ -192,7 +192,7 @@ IMPORTANT: While traditionally you'll be prompted to configure options and downl
 // Path to your model [models/merlinite-7b-lab-Q4_K_M.gguf]:
 // ----
 
-// NOTE: When asked to enter a directory for the model file, use the default and hit <ENTER>
+// NOTE: モデル ファイルのディレクトリを入力するように求められたら、デフォルトを使用して、 <ENTER> を入力してください。
 
 [subs=quotes]
 ----
@@ -200,22 +200,22 @@ Generating `config.yaml` in the current directory...
 Initialization completed successfully, you're ready to start using `ilab`. Enjoy!
 ----
 
-* Several things happen during the initialization phase: A default taxonomy is located on the local file system, and a configuration file (config.yaml) is created in the current directory.
-* The config.yaml file contains defaults we will use during this workshop. After this workshop, when you begin playing around with InstructLab, it is important to understand the contents of the configuration file so that you can tune the parameters to your liking.
+* 初期化フェーズではいくつかの処理が行われます。デフォルトの分類法がローカル ファイル システムに配置され、構成ファイル (config.yaml) が現在のディレクトリに作成されます。
+* config.yaml ファイルには、このワークショップ中に使用するデフォルトが含まれています。このワークショップの後、InstructLab を試し始めるときは、パラメーターを好みに合わせて調整できるように、構成ファイルの内容を理解することが重要です。
 
 [#download]
 === Download the model
 
-With the InstructLab environment configured, you can now download a quantized (compressed and optimized) model to your local directory, to be used as a model server for API requests, or to help train a new model as we'll do in this workshop. Run the `ilab model download` command.
+InstructLab 環境を構成すると、量子化 (圧縮および最適化された) モデルをローカル ディレクトリにダウンロードして、API リクエストのモデル サーバーとして使用したり、このワークショップで行うように新しいモデルのトレーニングに使用したりできるようになります。 `ilab model download` を実行します。
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab model download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf
 ----
 
-The `ilab model download` command downloads a model from the HuggingFace instructlab organization that we will use for this workshop. The output should look like the following:
+`ilab model download` コマンドは、このワークショップで使用するモデルを HuggingFaceのinstructlab 組織からダウンロードします。出力は次のようになります。:
 
-// NOTE: *This command may not show the contents if the model is being cached on the local machine.*
+// NOTE: *モデルがローカル マシンにキャッシュされている場合、このコマンドでは内容が表示されない場合があります。*
 
 [subs=quotes]
 ----
@@ -224,20 +224,19 @@ Downloading 'granite-7b-lab-Q4_K_M.gguf' to 'models/.huggingface/download/granit
 INFO 2024-05-06 16:46:24,394 file_download.py:1877 Downloading 'granite-7b-lab-Q4_K_M.gguf' to 'models/.huggingface/download/granite-7b-lab-Q4_K_M.gguf.6adeaad8c048b35ea54562c55e454cc32c63118a32c7b8152cf706b290611487.incomplete'100%|█████████████████████████████████████████████████████████████| 4.08G/4.08G [00:36<00:00, 110MB/s]
 ----
 
-Now that the model has been downloaded, we can serve and chat with the model. Serving the model simply means we are going to run a server that will allow other programs to interact with the data similar to making an API call. 
+モデルがダウンロードされたので、モデルを提供してチャットできるようになります。モデルを提供するということは、他のプログラムが API 呼び出しを行うのと同様にデータを操作できるようにするサーバーを実行することを意味します。
 
 [#serve]
 === Serving the model
 
-Let's serve the model by running the following command:
+次のコマンドを実行してモデルを提供しましょう:
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab model serve --model-path models/granite-7b-lab-Q4_K_M.gguf
 ----
 
-As you can see, the serve command can take an optional `-–model-path` argument. In this case, we want to serve the Granite model. If no model path is provided, the default value from the config.yaml file will be used. 
-Once the model is served and ready, you’ll see the following output:
+ご覧のとおり、serve コマンドはオプションの `-–model-path` 引数を取ることができます。この場合、Granite モデルを提供したいと考えています。モデル パスが指定されていない場合は、config.yaml ファイルのデフォルト値が使用されます。 モデルが提供されて準備が完了すると、次の出力が表示されます。:
 
 [subs=quotes]
 ----
@@ -246,16 +245,16 @@ INFO 2024-04-23 17:17:02,861 server.py:155 Starting server process, press CTRL+C
 INFO 2024-04-23 17:17:02,861 server.py:156 After application startup complete see http://127.0.0.1:8000/docs for API.
 ----
 
-*WOOHOO!* You just served the model for the first time and are ready to test out your work so far by interacting with the LLM. We are going to accomplish this by chatting with the model.
+*WOOHOO!* 初めてモデルを提供したばかりで、LLM と対話してこれまでの作業をテストする準備ができています。これから、モデルとチャットすることで実現します。
 
 [#chat]
 === Chat with the model
 
-Because you’re serving the model in one terminal window, you will have to use a separate terminal window and re-activate your Python virtual environment to run the ilab chat command. 
+1 つのターミナル ウィンドウでモデルを提供しているため、ilab チャット コマンドを実行するには、別のターミナル ウィンドウを使用し、Python 仮想環境を再アクティブ化する必要があります。
 
-// Note: You can open a new tab in your terminal by hitting the command-t keyboard combination. If you need assistance, please ask a Red Hatter in the InstructLab Lounge.
+// Note: command + T キーボードの組み合わせを押すと、ターミナルで新しいタブを開くことができます。サポートが必要な場合は、InstructLab ラウンジの Red Hatter にお問い合わせください。
 
-. In the *bottom* terminal window, issue the following commands:
+. *下の* ターミナル ウィンドウで、次のコマンドを発行します。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -269,99 +268,100 @@ source venv/bin/activate
 ----
 
 [start=2]
-. Now that the environment is sourced, you can begin a chat session with the ilab chat command:
+. 環境が提供されたので、ilab chat コマンドを使用してチャット セッションを開始できます。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab model chat -m models/granite-7b-lab-Q4_K_M.gguf
 ----
 
-You should see a chat prompt like the example below.
+以下の例のようなチャット プロンプトが表示されるはずです。
 
 [source,sh]
 ----
-╭───────────────────────────────────────────────────────────────────────────╮
-│ Welcome to InstructLab Chat w/ MODELS/GRANITE-7B-LAB-Q4_K_M.GGUF (type /h for help)                                                                                                                            
-╰───────────────────────────────────────────────────────────────────────────╯
+╭────────────────────────────────────────────────────────────────────────────────────╮
+│ Welcome to InstructLab Chat w/ MODELS/GRANITE-7B-LAB-Q4_K_M.GGUF (type /h for help)│                                                                                                                           
+╰────────────────────────────────────────────────────────────────────────────────────╯
 >>> 
 ----
 
 [start=3]
-. At this point, you can interact with the model by asking it a question. Example:
-What is openshift in 20 words or less?
+. この時点で、モデルに質問することでモデルと対話できるようになります。
+例：What is openshift in 20 words or less?（openshift を 20 語以内で説明してください。）
+（現状InstructLabは日本語の入力をサポートしていないので英語での入力をお勧めします。）
 
 [source,sh,role=execute,subs=attributes+]
 ----
 What is openshift in 20 words or less?
 ----
 
-Wait, wut? That was AWESOME!!!!! You now have your own local LLM running on this machine. That was pretty easy, huh?
+待って、あれ？最高!!!!!これで、このマシン上で独自のローカル LLM が実行されました。とても簡単でしたね。
 
 [#integrating_instructlab]
 == Integrating AI into an Insurance Application
 
-The previous section showed you the basics of how to interact with InstructLab. Now let's take things a step further by using InstructLab with an example application. We will use RHEL AI to leverage the granite LLM, add additional data in the form of knowledge and/or skills, train the model with new knowledge and enable it to answer questions effectively. This is done in the context of Parasol, a fictional company that processes insurance claims.
+前のセクションでは、InstructLab と対話する方法の基本を説明しました。次に、サンプル アプリケーションで InstructLab を使用して、さらに一歩進んでみましょう。 RHEL AI を使用して granite LLM を活用し、知識やスキルの形でデータを追加し、新しい知識でモデルをトレーニングし、質問に効果的に回答できるようにします。これは、保険請求（insurance claims）を処理する架空の会社である Parasol のコンテキストで行われます。
 
-Parasol has a chatbot application infused with AI (the granite model) to provide repair suggestions for claims submitted. This would allow Parasol to expedite processing of various claims on hold. But at the moment, the chatbot does not provide effective repair suggestions. Using historical claims data that contain different repairs performed under different conditions, we show how users can add this knowledge to the granite model, train it on the additional knowledge and improve its recommendations.
+Parasol には、AI (graniteモデル) を組み込んだチャットボット アプリケーションがあり、提出された請求に対して修理提案を提供します。これにより、Parasol は保留中のさまざまな請求の処理を迅速化できるようになります。しかし現時点では、チャットボットは効果的な修理提案を提供しません。さまざまな条件下で実行されたさまざまな修理を含む過去の請求データを使用して、ユーザーがこの知識をgraniteモデルに追加し、追加の知識に基づいてトレーニングし、推奨事項を改善する方法を示します。
 
 [#using_parasol_application]
 === Using the Parasol Application
 
-Let's start by taking a look at the current experience a claims agent has when interacting with the chatbot. 
+まず、請求担当者がチャットボットと対話する際の現在のエクスペリエンスを見てみましょう。
 
-. While you may currently be in the *Terminals* view, switch to *Parasol* to see the Parasol company's claims application in your browser.
+.  *Terminals* ビューにいる場合、 *Parasol* に切り替えて、ブラウザーに Parasol 会社のクレーム アプリケーションを表示します。
 
 image::parasol-view.png[]
 
-As a claims agent, you can navigate and view the existing claims by clicking on the claim number on the screen. 
+請求担当者は、画面上の請求番号をクリックすると、既存の請求に移動して表示できます。
 
 [start=2]
-. For this lab we will be investigating *CLM195501* which is a claim that has been filed by Marty McFly, let's click on this claim now.
+. このラボでは、Marty McFly によって提出された請求である *CLM195501* を調査します。この請求をクリックしてみましょう。
 
 image::parasol-claim.png[]
 
-You can read the details of the claim on this page and even expand the image of the DeLorean to check out how badly Marty wrecked his ride (note the flux capacitor on the ground). 
+このページで請求の詳細を読むことができ、デロリアンの画像を拡大して、マーティが乗り物をどれほどひどく破壊したかを確認することもできます（地面にある磁束コンデンサに注目してください）。
 
 [start=3]
-. Once you read the claim you click on the chatbot using the small blue icon in the bottom right of the page.
+. 請求内容を読んだら、ページの右下にある小さな青いアイコンを使用してチャットボットをクリックします。
 
 image::parasol-chat.webp[width=350]
 
-IMPORTANT: This chatbot is backed by the Granite model you served earlier, so if you killed that running process you will need to restart it in your terminal by running the following: `ilab model serve --model-path models/granite-7b-lab-Q4_K_M.gguf`
+IMPORTANT: このチャットボットは、以前に提供した Granite モデルによってサポートされているため、実行中のプロセスを強制終了した場合は、次のコマンドを実行してターミナルで再起動する必要があります: `ilab model serve --model-path models/granite-7b-lab-Q4_K_M.gguf`
 
 // [source,sh,role=execute,subs=attributes+]
 // ----
 // ilab model chat -m models/granite-7b-lab-Q4_K_M.gguf
 // ----
 
-Let's imagine as a claims agent you'd like to know how much it might cost to repair a flux capacitor on Marty's DeLorean. 
+あなたが保険請求担当者として、マーティのデロリアンの磁束コンデンサの修理にどれくらいの費用がかかるかを知りたいと考えていると想像してください。 
 
 [start=4]
-. Ask the chatbot the following question:
+. チャットボットに次の質問をしてください:
 
 [source,sh,role=execute,subs=attributes+]
 ----
 How much does it cost to repair a flux capacitor?
 ----
 
-You should see something similar to the following. Note that LLMs by nature are non-deterministic. This means that even with the same prompt input, the model will produce varying responses. So, your results may vary slightly.
+次のような内容が表示されるはずです。 LLM は本質的に非決定的であることに注意してください。これは、同じプロンプト入力であっても、モデルがさまざまな応答を生成することを意味します。したがって、結果は若干異なる場合があります。
 
 image::parasol-chat-response.webp[width=350]
 
-What we've already started to do is provide contextual information about the claim in each conversation with the LLM using Prompt Engineering. But unfortunately, the chatbot doesn't know how much it costs to repair a flux capacitor, or any domain-specific knowledge for our organization. With InstructLab and RHEL AI, we can change that by teaching the model!
+私たちがすでに始めていることは、プロンプト エンジニアリングを使用して、LLM との各会話で請求に関するコンテキスト情報を提供することです。しかし、残念ながら、チャットボットは磁束コンデンサの修理にどれくらいの費用がかかるのか、または私たちの組織のドメイン固有の知識を知りません。 InstructLab と RHEL AI を使用すると、モデルを教えることでこの状況を変えることができます。
 
 [#taxononmy]
 === Understanding the Taxonomy
 
-InstructLab uses a novel synthetic data-based alignment tuning method for Large Language Models (LLMs.) The "lab" in InstructLab stands for **L**arge-scale **A**lignment for Chat **B**ots. The LAB method is driven by taxonomies, which are largely created manually and with care.
+InstructLab は、大規模言語モデル (LLM) に新しい合成データによるアライメント調整手法を使用します。InstructLab の「lab」は、**L**arge-scale **A**lignment for Chat **B**ots を表します。 LAB メソッドは分類法によって駆動され、分類法は主に手作業で慎重に作成されます。
 
-InstructLab crowdsources the process of tuning and improving models by collecting two types of data: knowledge and skills in the new InstructLab open source community. These submissions are collected in a taxonomy of YAML files to be used in the synthetic data generation process. To help you understand the directory structure of a taxonomy, please refer to the following image.
+InstructLab は、新しい InstructLab オープンソース コミュニティで知識とスキルという 2 種類のデータを収集することで、モデルのチューニングと改善のプロセスをクラウドソーシングします。それらの提供物は、分類されたYAML ファイルとして収集され、合成データ生成プロセスで使用されます。分類のディレクトリ構造を理解するには、次の画像を参照してください。
 
 image::taxonomy.png[]
 
-We are now going to leverage the taxonomy model to teach the model knowledge about a specific vehicle we cover and its details, from our organization's collection of public (and private) internal data.
+これから、分類モデルを活用して、組織の公開 (および非公開) 内部データのコレクションから、対象となる特定の車両とその詳細に関する知識をモデルに教えます。
 
-Navigate back to the *Terminals* view. In the terminal window where you are running chat, enter `exit` to quit the chat session.
+*Terminals* ビューに戻り、チャットを実行しているターミナル ウィンドウで、「exit」と入力してチャット セッションを終了します。
 
 . Navigate to the taxonomy directory.
 
@@ -371,7 +371,7 @@ cd ~/instructlab
 tree taxonomy | head -n 10
 ----
 
-.You should see the taxonomy directory listed as shown below:
+.以下に示すように分類ディレクトリがリストされているはずです。:
 [source,texinfo]
 ----
 taxonomy/
@@ -386,10 +386,10 @@ taxonomy/
 │   │   ├── geography
 ----
 
-Now, we need to create a directory where we can place our files.
+次に、ファイルを配置できるディレクトリを作成する必要があります。
 
 [start=2]
-. Create a directory to add new knowledge showing how to properly generate a knowledge on Instructlab 
+. Instructlab でナレッジを適切に生成する方法を示す新しいナレッジを追加するディレクトリを作成します。
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -397,14 +397,14 @@ mkdir -p ~/instructlab/taxonomy/knowledge/parasol/claims
 ----
 
 [start=3]
-. Add new capabilities to our model through new knowledge. 
+. 新しい知識を通じてモデルに新しい機能を追加します。 
 
-The way the taxonomy approach works is that we provide a file, named `qna.yaml`, that contains a sample data set of questions and answers. This data set will be used in the process of creating many more synthetic data examples, enough to fully influence the model's output. The important thing to understand about the `qna.yaml` file is that it must follow a specific schema for InstructLab to use it to synthetically generate more examples. 
+分類アプローチが機能する方法は、質問と回答のサンプル データ セットを含む `qna.yaml` という名前のファイルを提供することです。このデータ セットは、モデルの出力に完全に影響を与えるのに十分な、さらに多くの合成データ サンプルを作成するプロセスで使用されます。  `qna.yaml` ファイルについて理解する重要な点は、InstructLab がそれを使用してより多くの例を合成的に生成するには、このファイルが特定のスキーマに従う必要があるということです。
 
-The `qna.yaml` file is placed in a folder within the `knowledge` subdirectory of the taxonomy directory. It is placed in a folder with an appropriate name that is aligned with the data topic, as you will see in the below command.
+`qna.yaml` ファイルは、分類ディレクトリの `knowledge` サブディレクトリ内のフォルダーに配置されます。以下のコマンドでわかるように、データ トピックに合わせた適切な名前のフォルダーに配置されます。
 
 [start=4]
-. Instead of having to type a bunch of information in by hand, simply run the following command to copy this example https://raw.githubusercontent.com/rhai-code/backToTheFuture/main/qna.yaml[`qna.yaml`] file to your taxonomy directory:
+. 大量の情報を手で入力する代わりに、次のコマンドを実行して、サンプルの https://raw.githubusercontent.com/rhai-code/backToTheFuture/main/qna.yaml[`qna.yaml`] ファイルを分類ディレクトリにコピーするだけです。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -412,16 +412,16 @@ cp -av ~/files/qna.yaml ~/instructlab/taxonomy/knowledge/parasol/claims/
 ----
 
 [start=5]
-. You can then verify the file was correctly copied by issuing the following command which will display the first 10 lines of the file:
+. 次に、ファイルの最初の 10 行を表示する次のコマンドを発行して、ファイルが正しくコピーされたことを確認できます。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
 head ~/instructlab/taxonomy/knowledge/parasol/claims/qna.yaml
 ----
 
-During this workshop, we don’t expect you to type all of this information in by hand - we are including the content here for your reference.
+このワークショップでは、この情報をすべて手書きで入力することは期待されていません。参考のためにここに内容を記載します。
 
-It's a YAML file that consists of a list of Q&A examples that will be used by the trainer model to teach the student model. There is also a source document which is a link to a specific commit of a text file in git, where https://github.com/gshipley/backToTheFuture/blob/main/data.md[we've included] that a flux capacitor costs an affordable $10,000,000. To help you understand the Q&A file format, we have included it below.
+これは、トレーナーモデルが学生モデルを指導するために使用する Q&A サンプルのリストで構成される YAML ファイルです。 git 内のテキスト ファイルの特定のコミットへのリンクであるソース ドキュメントもあります。 https://github.com/gshipley/backToTheFuture/blob/main/data.md [ここ] に磁束コンデンサの手頃な価格が 10,000,000 ドルだということが含まれています。 Q&A ファイル形式を理解しやすくするために、以下に Q&A ファイル形式を示します。
 
 [source,yaml]
 ----
@@ -452,26 +452,26 @@ document:<5>
     - data.md
 ----
 
-<1> `created_by`: The author of the contribution, typically a GitHub username
-<2> `domain`: Category of the knowledge
-<3> `seed_examples`: Five or more examples sourced from the provided knowledge documents, representing a `question` for the model and desired `response`
-<4> `task_description`: An optional description of the knowledge for easily understanding the specific knowledge contribution
-<5> `document`: The source of your knowledge contribution, consisting of a `repo` URL pointing to the knowlege markdown files, and `commit` SHA that contains the specific files
-<6> `patterns`: A list of glob patterns specifying the markdown file(s) in your repository.
+<1> `created_by`: 投稿の作成者 (通常は GitHub ユーザー名)
+<2> `domain`: 知識のカテゴリー
+<3> `seed_examples`: 提供されたナレッジ ドキュメントから得られる 5 つ以上の、モデルに対する `question` と望ましい `response` の例
+<4> `task_description`: 特定の知識を容易に理解するための知識のオプショナルの説明
+<5> `document`: 知識のソース。ナレッジ マークダウン ファイルを指す `repo` URL と、ファイルを含む `commit` SHA で構成される。
+<6> `patterns`: リポジトリ内のマークダウン ファイルを指定するパターンのリスト。
 
 [start=6]
-. Now, it's time to verify that the seed data is curated properly.
+. 次に、シード データが適切にキュレーションされていることを確認します。
 
-InstructLab allows you to validate your taxonomy files before generating additional data. You can accomplish this by using the `ilab taxonomy diff` command as shown below:
+InstructLab を使用すると、追加データを生成する前に分類ファイルを検証できます。これを行うには、以下に示すように「ilab Taxonomy diff」コマンドを使用します。:
 
-NOTE: Make sure you are still in the virtual environment indicated by the (venv) on the command line. If not, source the venv/bin/activate file again.
+NOTE: コマンド ラインの (venv) で示される仮想環境にまだいることを確認してください。そうでない場合は、venv/bin/activate ファイルを再度取得します。
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab taxonomy diff
 ----
 
-.You should see the following output:
+.次の出力が表示されるはずです:
 [source,sh]
 ----
 knowledge/parasol/claims/qna.yaml
@@ -481,9 +481,9 @@ Taxonomy in /taxonomy/ is valid :)
 [#synthetic_data]
 === Generating Synthetic Data
 
-Okay, so far so good. Now, let’s move on to the AWESOME part. We are going to use our taxonomy, which contains our `qna.yaml` file, to have the LLM automatically generate more examples. The generate step can often take a while and is dependent on the number of instructions that you want to generate. In other words, this means that InstructLab will generate X number of additional questions and answers based on the samples provided. To give you an idea of how long this takes, generating 100 additional questions and answers typically takes about 7 minutes when using a nicely specced consumer-grade GPU-accelerated Linux machine. This can take around 15 minutes using Apple Silicon and depends on many factors. For the purpose of this workshop, we are only going to generate 5 additional samples. To do this, issue the following commands:
+さて、ここまでは順調です。さて、素晴らしい部分に移りましょう。 `qna.yaml` ファイルを含む分類法を使用して、LLM にさらに多くの例を自動的に生成させます。生成ステップには時間がかかることが多く、生成する命令の数によって異なります。言い換えれば、これは、InstructLab が提供されたサンプルに基づいて X 個の追加の質問と回答を生成することを意味します。これにどれくらいの時間がかかるかを説明すると、適切な仕様のコンシューマ グレードの GPU アクセラレーション Linux マシンを使用した場合、100 個の追加の質問と回答を生成するには通常約 7 分かかります。 Apple Silicon を使用すると、これには約 15 分かかる場合があり、多くの要因によって異なります。このワークショップでは、追加のサンプルを 5 つだけ生成します。これを行うには、次のコマンドを発行します。:
 
-. We will now run the command to generate data in the current terminal. The *upper* terminal should still be serving the Granite model from earlier. If the model is no longer being served, serve the model again with the following command (in the other *upper* window):
+. コマンドを実行して、現在のターミナルでデータを生成します。 *上の* ターミナルは以前の Granite モデルを引き続き提供しているはずです。モデルが提供されなくなった場合は、次のコマンド (他の *上の* ウィンドウで) を使用してモデルを再度提供します。
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -491,7 +491,7 @@ ilab model serve --model-path models/granite-7b-lab-Q4_K_M.gguf
 ----
 
 [start=2]
-. Now run the following command in the terminal window that is not serving the model, or the *bottom* window:
+. 次に、モデルを提供していないターミナル ウィンドウ、または *下の* ウィンドウで次のコマンドを実行します。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -499,7 +499,7 @@ cd ~/instructlab
 ilab data generate --model models/granite-7b-lab-Q4_K_M.gguf --num-instructions 5
 ----
 
-After running this command, you should see the InstructLab is now synthetically generating 5 examples based on the seed data you provided in the qna.yaml file. Take a look at the generated questions and answers to see what the model has created!
+このコマンドを実行すると、InstructLab が qna.yaml ファイルで指定したシード データに基づいて 5 つのサンプルを合成的に生成していることがわかります。生成された質問と回答を見て、モデルが何を作成したかを確認してください。
 
 [source,sh]
 ----
@@ -512,25 +512,25 @@ I>
 A> The DeLorean DMC-12 has a horsepower of 130 hp.
 ----
 
-Now that we have generated additional data, we can use the ilab train command to incorporate this data set with the model.
+追加データを生成したので、ilab train コマンドを使用して、このデータ セットをモデルに組み込むことができます。
 
-NOTE: Generating 5 additional examples is generally not enough to effectively impact the knowledge or skill of a model. However, due to time constraints of this workshop, the goal is to simply show you how this works using real commands. You would typically want to generate 100 or even 1000 additional data points. Even still, training on a laptop is more of a technology demonstration than something you'd want to do to train production LLMs. For training production LLMs, Red Hat provides RHEL AI and OpenShift AI.
+NOTE: 通常、追加の 5 つの例を生成しても、モデルの知識やスキルに効果的に影響を与えるには十分ではありません。ただし、このワークショップでは時間の制約があるため、実際のコマンドを使用してこれがどのように機能するかを簡単に説明することが目的です。通常は、100 個、さらには 1000 個の追加データ ポイントを生成する必要があります。それでも、ラップトップでのトレーニングは、実稼働 LLM をトレーニングするために行うものというよりは、テクノロジーのデモンストレーションにすぎません。実稼働 LLM のトレーニングのために、Red Hat は RHEL AI と OpenShift AI を提供します。
 
-Once the new data has been generated, the next step is to train the model with the updated knowledge. This is performed with the ilab train command.
+新しいデータが生成されたら、次のステップは、更新された知識を使用してモデルをトレーニングすることです。これは、ilab train コマンドを使用して実行されます。
 
-NOTE: Training using the newly generated data is a time and resource intensive task. Depending on the number of iterations desired, internet connection for safetensor downloading, and other factors, it can take from 20 minutes up to an hour. It is not required to train the model to continue with the lab as we will use an already trained model that was created using a generate step with 2500 instructions and 300 iterations.
+NOTE: 新しく生成されたデータを使用したトレーニングは、時間とリソースを大量に消費するタスクです。必要な反復回数、セーフテンソルのダウンロードのためのインターネット接続、その他の要因に応じて、20 分から最大 1 時間かかる場合があります。 2500 命令と 300 回の反復を含む生成ステップを使用して作成された、すでにトレーニング済みのモデルを使用するため、ラボを続行するためにモデルをトレーニングする必要はありません。
 
 [#training]
 === Training and Interacting with the Model
 
-Due to the time constraints of this lab, we will not actually be training the model. A trained model will be provided for you. However, to illustrate how training works, you would issue the following command:
+このラボでは時間の制約があるため、実際にはモデルをトレーニングしません。トレーニング済みのモデルが提供されます。ただし、トレーニングがどのように機能するかを説明するには、次のコマンドを発行します。:
 
 [source,sh,subs=attributes+]
 ----
 ilab model train --iters 10 --device cuda
 ----
 
-If we were really training the model, you would see the following output: 
+実際にモデルをトレーニングしている場合は、次の出力が表示されます。: 
 
 [source,sh]
 ----
@@ -554,14 +554,14 @@ LINUX_TRAIN.PY: LOADING THE BASE MODEL
 Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  5.95it/s]
 ----
 
-. Since this process will take over an hour to complete we have provided a model that has already been through this process. First, let's stop the current model server in the *upper* window, with bd:[CTRL+C]) on the keyboard. In order to serve the newly trained model you can now run the following in the *upper* command window:
+. このプロセスが完了するまでに 1 時間以上かかるため、このプロセスがすでに完了したモデルを提供しています。まず、*上の* ウィンドウで [CTRL+C] を使用して、現在のモデルサーバーを停止します。新しくトレーニングされたモデルを提供するために、*上の* コマンド ウィンドウで次のコマンドを実行します。。
 
 [source,sh,role=execute,subs=attributes+]
 ----
 ilab model serve --model-family merlinite --model-path /home/instruct/summit-connect-merlinite-lab-Q4.gguf
 ----
 
-It may take some seconds to start, but you should see the following:
+開始までに数秒かかる場合がありますが、次のように表示されます。:
 
 [source,sh]
 ----
@@ -573,34 +573,34 @@ INFO 2024-08-06 17:04:15,452 server.py:219: server After application startup com
 [#verify]
 === Verifying the Application
 
-Now for the moment of truth. You’ve added knowledge, generated synthetic data, and retrained the model. Refresh your browser window where you were viewing Marty McFly’s claim in the Parasol insurance application
+さて、ここからが真実の瞬間だ。知識を追加し、合成データを生成し、モデルを再トレーニングしました。パラソル保険アプリケーションで Marty McFly の請求を表示していたブラウザ ウィンドウを更新します。
 
 image::parasol-view.png[]
 
-Click on the blue chatbot icon in the bottom right corner of the screen to open the chatbot.
+画面の右下隅にある青いチャットボット アイコンをクリックしてチャットボットを開きます。
 
 image::parasol-chat.webp[width=350]
 
-. Let’s ask the chatbot the same question with the newly trained model and see if the response has improved.
+. 新しくトレーニングされたモデルを使用してチャットボットに同じ質問をして、応答が改善されたかどうかを確認してみましょう。
 
 [source,sh,role=execute,subs=attributes+]
 ----
 How much does it cost to repair a flux capacitor?
 ----
 
-You should see something similar to the following (keep in mind that your output may look different due to the nature of large language models):
+次のような内容が表示されるはずです (大規模言語モデルの性質により、出力が異なる場合があることに注意してください)。:
 
 image::parasol-new-response.webp[width=350]
 
-CONGRATULATIONS! You just trained a chatbot for Parasol insurance and will make every claims agent’s life a little better! 
+CONGRATULATIONS! Parasol 保険用のチャットボットをトレーニングしただけで、すべての保険請求担当者の生活が少し改善されます。
 
 [#conclusion]
 == Conclusion
 
-Woohoo young padawan, mission accomplished. Breathe in for a bit. We’re proud of you, and I dare say you’re an AI Engineer now. You’re probably wondering what the next steps are, so let me give you some suggestions.
+うおおお若いパダワン、任務は完了しました。少し息を吸ってください。私たちはあなたを誇りに思います。あえて言えば、あなたは今 AI エンジニアです。おそらく次のステップは何なのか疑問に思われていると思いますので、いくつかの提案をさせてください。
 
-Start playing with both skill and knowledge additions. This is to give something "new" to the model. You give it a chunk of data, something it doesn’t know about, and then train it on that. How could InstructLab-trained models help at your company? Which friend will you brag to first?
+スキルと知識の両方を追加してプレイを始めてください。これはモデルに何か「新しい」ものを与えるためです。知らないデータの塊を与えて、それをもとにトレーニングします。 InstructLab でトレーニングされたモデルは、あなたの会社でどのように役立ちますか?最初にどの友達に自慢しますか?
 
-As you can see, InstructLab is pretty straightforward and most of the time you spend will be on curating new taxonomy content. Again, we’re so happy you made it this far, and remember if you have questions we are here to help, and are excited to see what you come up with!
+ご覧のとおり、InstructLab は非常に簡単で、ほとんどの時間は新しい分類コンテンツのキュレーションに費やされます。繰り返しになりますが、ここまで進んでいただいたことをとてもうれしく思います。ご質問があれば、私たちがお手伝いいたします。皆さんが何を思いつくか楽しみにしています。
 
-Please visit the official project github at https://github.com/instructlab[www.github.com/instructlab] and check out the community repo to learn about how to get involved with the upstream community! Also, https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[learn more about RHEL AI here] (which includes support for InstructLab, idemification for model output with the Granite family of models, and a platform to run AI your own way on the hybrid cloud).
+アップストリーム コミュニティに参加する方法については、公式プロジェクト (https://github.com/instructlab[www.github.com/instructlab]) にアクセスし、コミュニティ リポジトリをチェックしてください。また、https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI の詳細については、こちらをご覧ください] (これには、InstructLab のサポート、Granite モデル ファミリの識別、ハイブリッド クラウド上で AI をお好みの方法で実行するためのプラットフォームが含まれます）。
