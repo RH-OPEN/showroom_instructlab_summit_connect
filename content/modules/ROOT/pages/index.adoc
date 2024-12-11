@@ -7,14 +7,14 @@
 
 == Introduction to the Lab
 
-Red Hat Summit Connect で RHEL AI について学び、使用するために時間を割いていただきありがとうございます。この実践的な演習では、https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI] とは何か、そしてそれを使用して企業に価値を提供する方法を学びます。また、RHEL AI を活用して大規模言語モデル (LLM) を改善し、合成データ生成を使用してトレーニングする方法も学習します。  RHEL AI はいくつかのコアコンポーネントで構成されています。:
+Red Hat Summit Connect で RHEL AI について学び、使用するために時間を割いていただきありがとうございます。この実践的な演習では、 https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI] とは何か、そしてそれを使用して企業に価値を提供する方法を学びます。また、RHEL AI を活用して大規模言語モデル (LLM) を改善し、合成データ生成を使用してトレーニングする方法も学習します。  RHEL AI はいくつかのコアコンポーネントで構成されています。:
 
 . https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode[RHEL Image Mode]
 . The https://www.ibm.com/granite[Granite] Large Language Model(s)
 . https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] for model alignment
 . Support and indemnification from Red Hat
 
-https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] は、Red Hat と MIT-IBM Watson AI Lab による完全なオープンソース プロジェクトです。MIT-IBM Watson AI Labは https:// arxiv.org/abs/2403.01081[Large-scale Alignment for chatBots] (LAB)（チャットボットの大規模調整）を発表しました。このプロジェクトのイノベーションは、LLM トレーニングの指導調整段階で役立ちます。ただし、このプロジェクトの利点を完全に理解するには、LLM とは何か、モデルのトレーニングに関連する難しさとコストについて、いくつかの基本概念を理解しておく必要があります。
+https://www.redhat.com/en/topics/ai/what-is-instructlab[InstructLab] は、Red Hat と MIT-IBM Watson AI Lab による完全なオープンソース プロジェクトです。MIT-IBM Watson AI Labは https://arxiv.org/abs/2403.01081[Large-scale Alignment for chatBots] (LAB)（チャットボットの大規模調整）を発表しました。このプロジェクトのイノベーションは、LLM トレーニングの指導調整段階で役立ちます。ただし、このプロジェクトの利点を完全に理解するには、LLM とは何か、モデルのトレーニングに関連する難しさとコストについて、いくつかの基本概念を理解しておく必要があります。
 
 [#llms]
 === What is a Large Language Model?
@@ -148,7 +148,7 @@ Commands:
 ----
 
 
-*Congratulations!* これですべてがインストールされ、LLM アライメントの世界に飛び込む準備が整いました。
+*CONGRATULATIONS!* これですべてがインストールされ、LLM アライメントの世界に飛び込む準備が整いました。
 
 [#initialize]
 === Initialize ilab
@@ -169,7 +169,7 @@ Please provide the following values to initiate the environment [press Enter for
 Path to taxonomy repo [taxonomy]:
 ----
 
-IMPORTANT: While traditionally you'll be prompted to configure options and download the taxonomy, here you can just it kbd:[ENTER] for the default settings.
+IMPORTANT: オプションを設定して分類法をダウンロードするように求められますが、ここでは kbd:[ENTER] だけを入力してデフォルト設定で進みます。
 
 // When prompted to accept the `config.yaml`, hit kbd:[ENTER]
 
@@ -268,7 +268,7 @@ source venv/bin/activate
 ----
 
 [start=2]
-. 環境が提供されたので、ilab chat コマンドを使用してチャット セッションを開始できます。:
+. 環境が提供されたので、`ilab model chat` コマンドを使用してチャット セッションを開始できます。:
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -277,7 +277,7 @@ ilab model chat -m models/granite-7b-lab-Q4_K_M.gguf
 
 以下の例のようなチャット プロンプトが表示されるはずです。
 
-[source,sh]
+[subs=quotes]
 ----
 ╭────────────────────────────────────────────────────────────────────────────────────╮
 │ Welcome to InstructLab Chat w/ MODELS/GRANITE-7B-LAB-Q4_K_M.GGUF (type /h for help)│                                                                                                                           
@@ -421,7 +421,7 @@ head ~/instructlab/taxonomy/knowledge/parasol/claims/qna.yaml
 
 このワークショップでは、この情報をすべて手書きで入力することは期待されていません。参考のためにここに内容を記載します。
 
-これは、トレーナーモデルが学生モデルを指導するために使用する Q&A サンプルのリストで構成される YAML ファイルです。 git 内のテキスト ファイルの特定のコミットへのリンクであるソース ドキュメントもあります。 https://github.com/gshipley/backToTheFuture/blob/main/data.md [ここ] に磁束コンデンサの手頃な価格が 10,000,000 ドルだということが含まれています。 Q&A ファイル形式を理解しやすくするために、以下に Q&A ファイル形式を示します。
+これは、トレーナーモデルが学生モデルを指導するために使用する Q&A サンプルのリストで構成される YAML ファイルです。 git 内のテキスト ファイルの特定のコミットへのリンクであるソース ドキュメントもあります。 https://github.com/gshipley/backToTheFuture/blob/main/data.md[ここ] に磁束コンデンサの手頃な価格が 10,000,000 ドルだということが含まれています。 Q&A ファイル形式を理解しやすくするために、以下に Q&A ファイル形式を示します。
 
 [source,yaml]
 ----
@@ -462,7 +462,7 @@ document:<5>
 [start=6]
 . 次に、シード データが適切にキュレーションされていることを確認します。
 
-InstructLab を使用すると、追加データを生成する前に分類ファイルを検証できます。これを行うには、以下に示すように「ilab Taxonomy diff」コマンドを使用します。:
+InstructLab を使用すると、追加データを生成する前に分類ファイルを検証できます。これを行うには、以下に示すように `ilab Taxonomy diff` コマンドを使用します。:
 
 NOTE: コマンド ラインの (venv) で示される仮想環境にまだいることを確認してください。そうでない場合は、venv/bin/activate ファイルを再度取得します。
 
@@ -512,11 +512,11 @@ I>
 A> The DeLorean DMC-12 has a horsepower of 130 hp.
 ----
 
-追加データを生成したので、ilab train コマンドを使用して、このデータ セットをモデルに組み込むことができます。
+追加データを生成したので、 `ilab model train` コマンドを使用して、このデータ セットをモデルに組み込むことができます。
 
 NOTE: 通常、追加の 5 つの例を生成しても、モデルの知識やスキルに効果的に影響を与えるには十分ではありません。ただし、このワークショップでは時間の制約があるため、実際のコマンドを使用してこれがどのように機能するかを簡単に説明することが目的です。通常は、100 個、さらには 1000 個の追加データ ポイントを生成する必要があります。それでも、ラップトップでのトレーニングは、実稼働 LLM をトレーニングするために行うものというよりは、テクノロジーのデモンストレーションにすぎません。実稼働 LLM のトレーニングのために、Red Hat は RHEL AI と OpenShift AI を提供します。
 
-新しいデータが生成されたら、次のステップは、更新された知識を使用してモデルをトレーニングすることです。これは、ilab train コマンドを使用して実行されます。
+新しいデータが生成されたら、次のステップは、更新された知識を使用してモデルをトレーニングすることです。これは、 `ilab model train` コマンドを使用して実行されます。
 
 NOTE: 新しく生成されたデータを使用したトレーニングは、時間とリソースを大量に消費するタスクです。必要な反復回数、セーフテンソルのダウンロードのためのインターネット接続、その他の要因に応じて、20 分から最大 1 時間かかる場合があります。 2500 命令と 300 回の反復を含む生成ステップを使用して作成された、すでにトレーニング済みのモデルを使用するため、ラボを続行するためにモデルをトレーニングする必要はありません。
 
@@ -554,7 +554,7 @@ LINUX_TRAIN.PY: LOADING THE BASE MODEL
 Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  5.95it/s]
 ----
 
-. このプロセスが完了するまでに 1 時間以上かかるため、このプロセスがすでに完了したモデルを提供しています。まず、*上の* ウィンドウで [CTRL+C] を使用して、現在のモデルサーバーを停止します。新しくトレーニングされたモデルを提供するために、*上の* コマンド ウィンドウで次のコマンドを実行します。。
+. このプロセスが完了するまでに 1 時間以上かかるため、このプロセスがすでに完了したモデルを提供しています。まず、*上の* ウィンドウで kbd:[CTRL+C] を使用して、現在のモデルサーバーを停止します。新しくトレーニングされたモデルを提供するために、*上の* コマンド ウィンドウで次のコマンドを実行します。。
 
 [source,sh,role=execute,subs=attributes+]
 ----
@@ -592,15 +592,15 @@ How much does it cost to repair a flux capacitor?
 
 image::parasol-new-response.webp[width=350]
 
-CONGRATULATIONS! Parasol 保険用のチャットボットをトレーニングしただけで、すべての保険請求担当者の生活が少し改善されます。
+*CONGRATULATIONS!* Parasol 保険用のチャットボットをトレーニングしただけで、すべての保険請求担当者の生活が少し改善されます。
 
 [#conclusion]
 == Conclusion
 
-うおおお若いパダワン、任務は完了しました。少し息を吸ってください。私たちはあなたを誇りに思います。あえて言えば、あなたは今 AI エンジニアです。おそらく次のステップは何なのか疑問に思われていると思いますので、いくつかの提案をさせてください。
+*WOOHOO!* 若いパダワン、任務は完了しました。少し息を吸ってください。私たちはあなたを誇りに思います。あえて言えば、あなたは今 AI エンジニアです。おそらく次のステップは何なのか疑問に思われていると思いますので、いくつかの提案をさせてください。
 
 スキルと知識の両方を追加してプレイを始めてください。これはモデルに何か「新しい」ものを与えるためです。知らないデータの塊を与えて、それをもとにトレーニングします。 InstructLab でトレーニングされたモデルは、あなたの会社でどのように役立ちますか?最初にどの友達に自慢しますか?
 
 ご覧のとおり、InstructLab は非常に簡単で、ほとんどの時間は新しい分類コンテンツのキュレーションに費やされます。繰り返しになりますが、ここまで進んでいただいたことをとてもうれしく思います。ご質問があれば、私たちがお手伝いいたします。皆さんが何を思いつくか楽しみにしています。
 
-アップストリーム コミュニティに参加する方法については、公式プロジェクト (https://github.com/instructlab[www.github.com/instructlab]) にアクセスし、コミュニティ リポジトリをチェックしてください。また、https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[RHEL AI の詳細については、こちらをご覧ください] (これには、InstructLab のサポート、Granite モデル ファミリの識別、ハイブリッド クラウド上で AI をお好みの方法で実行するためのプラットフォームが含まれます）。
+アップストリーム コミュニティに参加する方法については、公式プロジェクト (https://github.com/instructlab[www.github.com/instructlab]) にアクセスし、コミュニティ リポジトリをチェックしてください。また、RHEL AI の詳細については、 https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai[こちら] をご覧ください(RHEL AIには、InstructLab のサポート、Granite モデル ファミリの識別、ハイブリッド クラウド上で AI をお好みの方法で実行するためのプラットフォームが含まれます）。
