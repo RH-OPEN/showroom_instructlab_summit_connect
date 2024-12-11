@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>InstructLab ワークショップ: Parasol Insurance Company 向けのカスタム LLM のトレーニング :: Summit Connect - Advanced InstructLab Workshop</title>
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+<link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://demo.redhat.com" target="_blank" style="margin-left: 5%;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1508.5 178.739" style="width: 278px;"><g fill="#fff"><path d="M316.6 63.2v-56H342a21.279 21.279 0 0 1 7.8 1.3 18.111 18.111 0 0 1 5.9 3.5 15.577 15.577 0 0 1 5 11.8 15.051 15.051 0 0 1-3.1 9.5 16.836 16.836 0 0 1-8.4 5.8l12.5 24.1h-9.3l-11.6-23H325v23Zm24.7-48.6H325v18.7h16.3q5.25 0 8.1-2.7a8.7 8.7 0 0 0 2.8-6.6 8.7 8.7 0 0 0-2.8-6.6c-1.8-1.9-4.5-2.8-8.1-2.8ZM364.1 42.8a20.674 20.674 0 0 1 1.6-8.2 20.288 20.288 0 0 1 4.3-6.7 19.92 19.92 0 0 1 6.5-4.5 19.718 19.718 0 0 1 8-1.6 18.463 18.463 0 0 1 7.8 1.6 18.677 18.677 0 0 1 6.2 4.5 20.927 20.927 0 0 1 4.1 6.8 23.2 23.2 0 0 1 1.5 8.4v2.3H372a13.822 13.822 0 0 0 4.6 8.4 13.6 13.6 0 0 0 9.1 3.3 15.553 15.553 0 0 0 5.7-1 12.858 12.858 0 0 0 4.6-2.6l5.1 5a25.983 25.983 0 0 1-7.4 4.1 24.69 24.69 0 0 1-8.4 1.3 21.306 21.306 0 0 1-8.4-1.6 22.763 22.763 0 0 1-6.8-4.4 20.788 20.788 0 0 1-4.5-6.7 23.2 23.2 0 0 1-1.5-8.4Zm20.2-14.2a11.527 11.527 0 0 0-8 3 13.046 13.046 0 0 0-4.2 7.8h24.2a13.091 13.091 0 0 0-4.2-7.8 11.106 11.106 0 0 0-7.8-3ZM443.1 63.2v-3.8a19.448 19.448 0 0 1-5.8 3.3 18.924 18.924 0 0 1-6.7 1.2 19.824 19.824 0 0 1-14.6-6.1 22.268 22.268 0 0 1-4.4-6.7 21.812 21.812 0 0 1 0-16.4A20.534 20.534 0 0 1 416 28a19.335 19.335 0 0 1 6.6-4.5 20.334 20.334 0 0 1 8.2-1.6 20.7 20.7 0 0 1 6.6 1 19.415 19.415 0 0 1 5.7 3V7.2l8-1.8v57.8Zm-25.2-20.4a13.718 13.718 0 0 0 4 10.1 13.45 13.45 0 0 0 9.8 4.1 14.956 14.956 0 0 0 6.4-1.3 15.954 15.954 0 0 0 4.9-3.6V33.6a14.988 14.988 0 0 0-4.9-3.5 15.271 15.271 0 0 0-6.4-1.3 13.423 13.423 0 0 0-9.9 4 13.806 13.806 0 0 0-3.9 10ZM478.1 63.2v-56h8.4v24h29.8v-24h8.4v56h-8.4V38.8h-29.8v24.4ZM547.2 64a16.483 16.483 0 0 1-10.8-3.5 11.037 11.037 0 0 1-4.2-8.9 10.375 10.375 0 0 1 4.7-9.2 20.76 20.76 0 0 1 11.8-3.2 27.841 27.841 0 0 1 5.8.6 27.374 27.374 0 0 1 5.3 1.6v-4.3a8.143 8.143 0 0 0-2.6-6.5 11.452 11.452 0 0 0-7.4-2.2 20.788 20.788 0 0 0-6 .9 34.616 34.616 0 0 0-6.6 2.6l-3-6a54.169 54.169 0 0 1 8.4-3.1 33.18 33.18 0 0 1 8.3-1.1c5.2 0 9.3 1.3 12.2 3.8s4.4 6.1 4.4 10.8v27h-7.8v-3.5a19.441 19.441 0 0 1-5.8 3.2 23.54 23.54 0 0 1-6.7 1Zm-7.3-12.6a5.646 5.646 0 0 0 2.6 4.8 11.193 11.193 0 0 0 6.6 1.8 16.256 16.256 0 0 0 5.9-1 14.449 14.449 0 0 0 4.9-2.9V47a19.778 19.778 0 0 0-4.8-1.8 24.933 24.933 0 0 0-5.7-.6 11.859 11.859 0 0 0-6.8 1.8 5.728 5.728 0 0 0-2.7 5ZM580.6 53.2v-24H572v-6.7h8.6V12.1l7.9-1.9v12.3h12v6.7h-12v22.1a5.94 5.94 0 0 0 1.4 4.4c.9.9 2.5 1.3 4.6 1.3a23.637 23.637 0 0 0 3-.2 10.857 10.857 0 0 0 2.8-.8v6.7a19.28 19.28 0 0 1-3.8.9 27.484 27.484 0 0 1-3.8.3c-3.9 0-7-.9-9-2.8-2-1.7-3.1-4.4-3.1-7.9Z"></path></g><path d="M127 90.2c12.5 0 30.6-2.6 30.6-17.5a12.678 12.678 0 0 0-.3-3.4L149.8 37c-1.7-7.1-3.2-10.3-15.7-16.6-9.7-5-30.8-13.1-37.1-13.1-5.8 0-7.5 7.5-14.4 7.5-6.7 0-11.6-5.6-17.9-5.6-6 0-9.9 4.1-12.9 12.5 0 0-8.4 23.7-9.5 27.2a4.216 4.216 0 0 0-.3 1.9c0 9.2 36.3 39.4 85 39.4Zm32.5-11.4c1.7 8.2 1.7 9.1 1.7 10.1 0 14-15.7 21.8-36.4 21.8-46.8 0-87.7-27.4-87.7-45.5a17.535 17.535 0 0 1 1.5-7.3C21.8 58.8 0 61.8 0 81c0 31.5 74.6 70.3 133.7 70.3 45.3 0 56.7-20.5 56.7-36.6-.1-12.8-11-27.3-30.9-35.9Z" fill="#e00"></path><path d="M159.5 78.8c1.7 8.2 1.7 9.1 1.7 10.1 0 14-15.7 21.8-36.4 21.8-46.8 0-87.7-27.4-87.7-45.5a17.535 17.535 0 0 1 1.5-7.3l3.7-9.1a4.877 4.877 0 0 0-.3 2c0 9.2 36.3 39.4 85 39.4 12.5 0 30.6-2.6 30.6-17.5a12.678 12.678 0 0 0-.3-3.4Z"></path><path d="M253.5 158.7a2.22 2.22 0 0 1-2.2-2.2V2.2a2.2 2.2 0 0 1 4.4 0v154.2a2.242 2.242 0 0 1-2.2 2.3Z" fill="#fff"></path><text data-name="Demo Platform" transform="translate(1186 149)" fill="#fff" font-size="82" font-family="'RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif" font-weight="700"><tspan x="-877.892" y="0">Demo Platform</tspan></text></svg>
+      </a>
+      <a class="navbar-item site-title" target="__blank" style="color: #fff !important;" href="..">Summit Connect - Advanced InstructLab Workshop</a>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item navbar-item-right-dropdown has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Links</a>
+          <div class="navbar-dropdown navbar-dropdown-right">
+            <a class="navbar-item navbar-item-right-content" href="https://redhat.com" target="_blank">Red Hat</a>
+            <a class="navbar-item navbar-item-right-content" href="https://www.redhat.com/en/summit" target="_blank">Summit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="modules" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html" class=" query-params-link">RHEL AI &amp; InstructLab</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">イントロダクション</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#llms">大規模言語モデルとは何でしょうか？</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#how_trained">大規模言語モデルはどのようにトレーニングされるのでしょうか？</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#instructlab">それは InstructLab とどのように関係するのでしょうか？</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#getting_started">InstructLab を始める</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#installation">ilab コマンドラインインターフェースのインストール</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#configuration">ilab の実行</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#initialize">ilabの初期化</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#download">モデルのダウンロード</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#serve">モデルの提供</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#chat">モデルに対してチャットする</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#integrating_instructlab">AI を保険アプリケーションに統合する</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#using_parasol_application">Parasol アプリケーションの使用</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#taxonomy">分類法（taxonomy）の理解</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#sdg">合成データの生成</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#changing_model">InstructLab を使用した LLM の強化</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#verify">アプリケーションの検証</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#conclusion">結論</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">RHEL AI & InstructLab</span>
+      <ul class="versions">
+        <li class="version is-current">
+          <a href="index.html">master</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">RHEL AI & InstructLab</a></li>
+    <li><a href="index.html">イントロダクション</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">InstructLab ワークショップ: Parasol Insurance Company 向けのカスタム LLM のトレーニング</h1>
+<div class="sect1">
+<h2 id="_イントロダクション"><a class="anchor" href="#_イントロダクション"></a>1. イントロダクション</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>InstructLab について学び、使用するために時間を割いていただきありがとうございます。このハンズオンラボでは、InstructLab とは何かと、そしてそれを使用して会社に価値を提供する方法を学びます。InstructLab は <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai">RHEL AI</a> のコアコンポーネントであり、大規模言語モデル (LLM) に貢献および改善するために使用できます。</p>
+</div>
+<div class="paragraph">
+<p>RHEL AI はいくつかのコアコンポーネントで構成されています。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/image-mode">RHEL Image Mode</a></p>
+</li>
+<li>
+<p><a href="https://www.ibm.com/granite">Granite</a> Large Language Model(s)（大規模言語モデル）</p>
+</li>
+<li>
+<p>モデルアライメントのための <a href="https://www.redhat.com/en/topics/ai/what-is-instructlab">InstructLab</a></p>
+</li>
+<li>
+<p>Red Hat からのサポートと補償</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><a href="https://www.redhat.com/en/topics/ai/what-is-instructlab">InstructLab</a> は、Red Hat と MIT-IBM Watson AI Lab による完全なオープンソース プロジェクトです。MIT-IBM Watson AI Labは <a href="https://arxiv.org/abs/2403.01081">Large-scale Alignment for chatBots</a> (LAB)（チャットボットの大規模調整）を発表しました。このプロジェクトのイノベーションは、LLM トレーニングの指導調整段階で役立ちます。ただし、このプロジェクトの利点を完全に理解するには、LLM とは何か、モデルのトレーニングに関連する難しさとコストについて、いくつかの基本概念を理解しておく必要があります。</p>
+</div>
+<div class="sect2">
+<h3 id="llms"><a class="anchor" href="#llms"></a>1.1. 大規模言語モデルとは何でしょうか？</h3>
+<div class="paragraph">
+<p>大規模言語モデル (large language model: LLM) は、深層学習技術 (deep learning techniques) を使用して入力データに基づいて人間のようなテキストを理解して生成する人工知能 (artificial intelligence: AI) モデルの一種です。これらのモデルは、膨大な量のテキスト データを分析し、データ内のパターン、関係、構造を学習するように設計されています。これらは、次のようなさまざまな自然言語処理 (natural language processing: NLP) タスクに使用できます。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Text classification</strong>: スパム検出や感情分析など、内容に基づいてテキストを分類します。</p>
+</li>
+<li>
+<p><strong>Text summarization</strong>: ニュース記事や研究論文など、長いテキストの簡潔な要約を生成します。</p>
+</li>
+<li>
+<p><strong>Machine translation</strong>: 英語からフランス語、ドイツ語から中国語など、ある言語から別の言語へのテキストの翻訳します。</p>
+</li>
+<li>
+<p><strong>Question answering</strong>: 特定のコンテキストまたは一連の文書に基づいて質問に回答します。</p>
+</li>
+<li>
+<p><strong>Text generation</strong>: 記事、物語、さらには詩を書くなど、一貫性があり、文脈に関連性があり、文法的に正しい新しいテキストを作成します。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>大規模な言語モデルには通常、データ内の複雑な言語パターンと関係を捉えることを可能にする多くのパラメーター (数百万から数十億) があります。これらは、教師なし事前トレーニングや教師あり微調整などの手法を使用して、書籍、記事、Web サイトなどの大規模なデータセットでトレーニングされます。人気のある大規模言語モデルには、GPT-4、Llama、Mistral などがあります。</p>
+</div>
+<div class="paragraph">
+<p>要約すると、大規模言語モデル (LLM) は、深層学習技術を使用して、入力データに基づいて人間のようなテキストを理解して生成する人工知能モデルです。これらは、膨大な量のテキスト データを分析し、データ内のパターン、関係、構造を学習するように設計されており、さまざまな自然言語処理タスクに使用できます。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+LLM が何を達成できるかを理解していただくために、このセクション全体は、ワークショップで使用している基本モデルに対する簡単な質問で生成しました。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="how_trained"><a class="anchor" href="#how_trained"></a>1.2. 大規模言語モデルはどのようにトレーニングされるのでしょうか？</h3>
+<div class="paragraph">
+<p>大規模言語モデル (LLM) は通常、深層学習技術と大規模なデータセットを使用してトレーニングされます。トレーニングプロセスにはいくつかのステップが含まれます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Data Collection</strong>: 膨大な量のテキスト データが書籍、記事、Web サイト、データベースなどのさまざまなソースから収集されます。モデルを適切に一般化できるように、データにはさまざまな言語、ドメイン、スタイルが含まれる場合があります。</p>
+</li>
+<li>
+<p><strong>Pre-processing</strong>: 生のテキスト データは前処理され、ノイズ、不一致、無関係な情報が除去されます。これには、トークン化、小文字化、ステミング、見出し語化、およびエンコードが含まれる場合があります。</p>
+</li>
+<li>
+<p><strong>Tokenization</strong>: 前処理されたテキスト データは、モデルへの入力および出力として使用できるトークン (単語またはサブワード) に変換されます。一部のモデルでは、バイト ペア エンコーディング (BPE) またはサブワード セグメンテーションを使用して、語彙外の単語を処理し、コンテキスト情報を維持できるトークンを作成します。</p>
+</li>
+<li>
+<p><strong>Pre-training</strong>: モデルは教師なしまたは自己教師ありの方法でトレーニングされ、データ内のパターンと構造を学習します。</p>
+</li>
+<li>
+<p><strong>Model Alignment</strong>: (命令チューニングとプリファレンスチューニング): 人間の価値観と目標を大規模な言語モデルにエンコードして、可能な限り役立つ、安全、信頼できるものにするプロセス。このステップは、他の一部のステップほど計算集約的ではありません。</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="instructlab"><a class="anchor" href="#instructlab"></a>1.3. それは InstructLab とどのように関係するのでしょうか？</h3>
+<div class="paragraph">
+<p>InstructLab は、分類学に基づいた合成データ生成プロセスとマルチフェーズ チューニングフレームワークを活用しています。これにより、InstructLab は高価な人間による注釈への依存を大幅に削減し、大規模な言語モデルへの貢献が簡単かつアクセスしやすくなります。これは、InstructLab が LLM を使用してデータを生成し、そのデータを使用して LLM をさらにトレーニングできることを意味します。これは、調整フェーズがほとんどのユーザーにとって知識を提供するための出発点になることも意味します。  LAB 手法が導入される前は、通常、ユーザーは LLM のトレーニングに直接関与していませんでした。複雑に聞こえるかもしれませんが、ちょっと待ってください、これからこれがいかに使いやすいかがわかるでしょう。</p>
+</div>
+<div class="paragraph">
+<p>InstructLab を使用していると、スキルと知識という用語が表示されます。スキルと知識の違いは何ですか?簡単な例えとしては、スキルを誰かに釣り方を教えることだと考えてください。一方、知識とは、バスを釣るのに、最適な場所は日が沈む時間帯で、岸沿いの木の幹の近くにラインをキャストすることを知っていることです。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="getting_started"><a class="anchor" href="#getting_started"></a>2. InstructLab を始める</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="installation"><a class="anchor" href="#installation"></a>2.1. ilab コマンドラインインターフェースのインストール</h3>
+<div class="paragraph">
+<p>私たちは、ローカル LLM 開発者エクスペリエンスとワークフローを実装する <a href="https://github.com/instructlab/instructlab">ilab</a> という CLI ツールを作成しました。 ilab CLI は Python で書かれており、次のアーキテクチャで動作します。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Apple M1/M2/M3 Mac</p>
+</li>
+<li>
+<p>Linux システム</p>
+</li>
+<li>
+<p>Windows 11 の WSL 環境</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>このラボでは、Red Hat Enterprise Linux システム上で ilab コマンド ライン ツールを使用します。将来的には、さらに多くのオペレーティング システムがサポートされる予定です。コマンド ライン ツールを使用するためのシステム要件は次のとおりです。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>C++ コンパイラー</p>
+</li>
+<li>
+<p>Python 3.10 または Python 3.11</p>
+</li>
+<li>
+<p>約 60GB のディスクスペース (全ての手順を実行する場合)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>ディスク容量の要件は、いくつかの要因によって異なります。モデルをシステム上にローカルに置きながら、モデルにフィードするデータを生成することに注意してください。たとえば、このワークショップで使用しているモデルのサイズは約 5 GB です。</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration"><a class="anchor" href="#configuration"></a>2.2. ilab の実行</h3>
+<div class="paragraph">
+<p>最初に行う必要があるのは、InstructLab コマンド ライン ツールと対話できるようにする Python 仮想環境を調達することです。右側に 2 つのターミナル ウィンドウが表示されますが、<strong>top</strong> ウィンドウから始めましょう。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>事前設定されている InstructLab フォルダーに移動し、次のコマンドを実行して Python 仮想環境をアクティブ化します。</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cd ~/instructlab
+source venv/bin/activate</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">プロンプトは次のようになります。</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">(venv) [instruct@bastion instructlab]$</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>InstructLab はすでにプリインストールされています。 venv 環境から ilab コマンドを実行して、ilab が正しくインストールされていることを確認します。</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>すべてが正しくインストールされていると仮定すると、次の出力が表示されるはずです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Usage: ilab [OPTIONS] COMMAND [ARGS]...
+
+
+  CLI for interacting with InstructLab.
+
+
+  If this is your first time running ilab, it's best to start with `ilab config init`
+  to create the environment.
+
+
+Options:
+  --config PATH  Path to a configuration file.  [default: /home/instruct/.config/instructlab/config.yaml]
+  -v, --verbose  Enable debug logging (repeat for even more verbosity)
+  --version      Show the version and exit.
+  --help         Show this message and exit.
+
+Commands:
+  config    Command Group for Interacting with...
+  data      Command Group for Interacting with...
+  model     Command Group for Interacting with...
+  system    Command group for all system-related...
+  taxonomy  Command Group for Interacting with...
+
+Aliases:
+  chat      model chat
+  generate  data generate
+  serve     model serve
+  train     model train</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>CONGRATULATIONS!</strong> これですべてがインストールされ、LLM アライメントの世界に飛び込む準備が整いました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="initialize"><a class="anchor" href="#initialize"></a>2.3. ilabの初期化</h3>
+<div class="paragraph">
+<p>コマンドライン インターフェイス <code>ilab</code> が正しく動作していることがわかったので、次に行う必要があるのは、モデルの操作を開始できるようにローカル環境を初期化することです。これは、単純な init コマンドを発行することで実現されます。次のコマンドを実行して <code>ilab</code> を初期化します。:</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab config init</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次の出力が表示されるはずです。（ <kbd>ENTER</kbd> でデフォルトを選択）</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Welcome to InstructLab CLI. This guide will help you to setup your environment.
+Please provide the following values to initiate the environment [press Enter for defaults]:
+Path to taxonomy repo [/home/instruct/.local/share/instructlab/taxonomy]:</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<kbd>ENTER</kbd> を全てデフォルト設定で問題ありません。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Path to your model [/home/instruct/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf]:
+Generating `/home/instruct/.config/instructlab/config.yaml`...
+Detecting Hardware...
+We chose Nvidia 1x L4 as your designated training profile. This is for systems with 24 GB of vRAM.
+This profile is the best approximation for your system based off of the amount of vRAM. We modified it to match the number of GPUs you have.
+Is this profile correct? [Y/n]: Y</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上に示したように「Y」を入力するか、<kbd>ENTER</kbd> を押してトレーニング プロファイル設定を受け入れます。 <strong>このラボでは</strong> 、上記の出力で説明されているように、１枚の NVIDIA L4 GPU を使用しています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Initialization completed successfully, you're ready to start using `ilab`. Enjoy!</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>初期化フェーズではいくつかの処理が行われます。デフォルトの分類法がローカル ファイル システムに配置され、構成ファイル (config.yaml) が現在のディレクトリに作成されます。</p>
+</li>
+<li>
+<p>config.yaml ファイルには、このワークショップ中に使用するデフォルトが含まれています。このワークショップの後、InstructLab を試し始めるときは、パラメーターを好みに合わせて調整できるように、構成ファイルの内容を理解することが重要です。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="download"><a class="anchor" href="#download"></a>2.4. モデルのダウンロード</h3>
+<div class="paragraph">
+<p>InstructLab 環境を構成したら、2 つの異なる量子化 (圧縮および最適化) モデルをローカル ディレクトリにダウンロードします。 Granite は API リクエストのモデル サーバーとして使用され、Merlinite は新しいモデルをトレーニングするための合成データの作成に役立ちます。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+このラボでは 1 つの GPU のみを利用しているため、量子化モデルを使用しています。パフォーマンスや運用環境を向上させるには、量子化されていないモデルを使用します。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>以下に示すように <code>ilab model download</code> コマンドを実行します。</p>
+</div>
+<div class="paragraph">
+<p>まず、Granite をダウンロードしましょう。</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab model download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One more time, let&#8217;s pull down Merlinite:</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab model download --repository instructlab/merlinite-7b-lab-GGUF --filename=merlinite-7b-lab-Q4_K_M.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>ilab model download</code> コマンドは、このワークショップで使用するモデルを HuggingFaceのinstructlab 組織からダウンロードします。出力は次のようになります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Downloading model from Hugging Face: instructlab/granite-7b-lab-GGUF@main to /home/instruct/.cache/instructlab/models...
+Downloading 'granite-7b-lab-Q4_K_M.gguf' to '/home/instruct/.cache/instructlab/models/.cache/huggingface/download/granite-7b-lab-Q4_K_M.gguf.6adeaad8c048b35ea54562c55e454cc32c63118a32c7b8152cf706b290611487.incomplete'
+INFO 2024-09-10 16:51:32,740 huggingface_hub.file_download:1908: Downloading 'granite-7b-lab-Q4_K_M.gguf' to '/home/instruct/.cache/instructlab/models/.cache/huggingface/download/granite-7b-lab-Q4_K_M.gguf.6adeaad8c048b35ea54562c55e454cc32c63118a32c7b8152cf706b290611487.incomplete'
+granite-7b-lab-Q4_K_M.gguf: 100%|█| 4.08G/4.08G [00:19&lt;00:00, 207
+Download complete. Moving file to /home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf
+INFO 2024-09-10 16:51:52,562 huggingface_hub.file_download:1924: Download complete. Moving file to /home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>モデルがダウンロードされたので、モデルを提供してチャットできるようになります。モデルを提供するということは、他のプログラムが API 呼び出しを行うのと同様にデータを操作できるようにするサーバーを実行することを意味します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="serve"><a class="anchor" href="#serve"></a>2.5. モデルの提供</h3>
+<div class="paragraph">
+<p>次のコマンドを実行してモデルを提供しましょう。</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab model serve --model-path /home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ご覧のとおり、serve コマンドはオプションの <code>-–model-path</code> 引数を取ることができます。この場合、Granite モデルを提供したいと考えています。モデル パスが指定されていない場合は、config.yaml ファイルのデフォルト値が使用されます。</p>
+</div>
+<div class="paragraph">
+<p>モデルが提供されて準備が完了すると、次の出力が表示されます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>INFO 2024-09-10 18:12:09,459 instructlab.model.serve:145: Using model '/home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf' with -1 gpu-layers and 4096 max context size.
+INFO 2024-09-10 18:12:09,459 instructlab.model.serve:149: Serving model '/home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf' with llama-cpp
+INFO 2024-09-10 18:12:16,023 instructlab.model.backends.llama_cpp:250: Replacing chat template:
+ {% for message in messages %}
+{% if message['role'] == 'user' %}
+{{ '&lt;|user|&gt;
+' + message['content'] }}
+{% elif message['role'] == 'system' %}
+{{ '&lt;|system|&gt;
+' + message['content'] }}
+{% elif message['role'] == 'assistant' %}
+{{ '&lt;|assistant|&gt;
+' + message['content'] + eos_token }}
+{% endif %}
+{% if loop.last and add_generation_prompt %}
+{{ '&lt;|assistant|&gt;' }}
+{% endif %}
+{% endfor %}
+INFO 2024-09-10 18:12:16,026 instructlab.model.backends.llama_cpp:193: Starting server process, press CTRL+C to shutdown server...
+INFO 2024-09-10 18:12:16,026 instructlab.model.backends.llama_cpp:194: After application startup complete see http://127.0.0.1:8000/docs for API.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>WOOHOO!</strong> 初めてモデルを提供したばかりで、LLM と対話してこれまでの作業をテストする準備ができています。これから、モデルとチャットすることで実現します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="chat"><a class="anchor" href="#chat"></a>2.6. モデルに対してチャットする</h3>
+<div class="paragraph">
+<p>1 つのターミナル ウィンドウでモデルを提供しているため、 <code>ilab chat</code> コマンドを実行して提供しているモデルと通信するには、別のターミナル ウィンドウを使用し、Python 仮想環境を再アクティブ化する必要があります。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>bottom</strong> ターミナル ウィンドウで、次のコマンドを発行します。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cd ~/instructlab
+source venv/bin/activate</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">プロンプトは次のようになります。</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">(venv) [instruct@bastion instructlab]$</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>環境が提供されたので、<code>ilab model chat</code> コマンドを使用してチャット セッションを開始できます。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab model chat -m /home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下の例のようなチャット プロンプトが表示されるはずです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>╭──────────────────────────────────────────────────────────────────────────────╮
+│ Welcome to InstructLab Chat w/ GRANITE-7B-LAB-Q4_K_M.GGUF (type /h for help) │
+╰──────────────────────────────────────────────────────────────────────────────╯
+&gt;&gt;&gt;</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>この時点で、モデルに質問することでモデルと対話できるようになります。
+例：What is openshift in 20 words or less?（openshift を 20 語以内で説明してください。）
+（現状ilabは日本語の入力をサポートしていないので英語での入力をお勧めします。）</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">What is OpenShift in 20 words or less?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>待って、あれ？最高!!!!!これで、このマシン上で独自のローカル LLM が実行されました。とても簡単でしたね。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="integrating_instructlab"><a class="anchor" href="#integrating_instructlab"></a>3. AI を保険アプリケーションに統合する</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>前のセクションでは、InstructLab と対話する方法の基本を説明しました。次に、サンプル アプリケーションで InstructLab を使用して、さらに一歩進んでみましょう。 RHEL AI を使用して granite LLM を活用し、知識やスキルの形でデータを追加し、新しい知識でモデルをトレーニングし、質問に効果的に回答できるようにします。これは、保険請求（insurance claims）を処理する架空の会社である Parasol のコンテキストで行われます。</p>
+</div>
+<div class="paragraph">
+<p>Parasol には、AI (graniteモデル) を組み込んだチャットボット アプリケーションがあり、提出された請求に対して修理提案を提供します。これにより、Parasol は保留中のさまざまな請求の処理を迅速化できるようになります。しかし現時点では、チャットボットは効果的な修理提案を提供しません。さまざまな条件下で実行されたさまざまな修理を含む過去の請求データを使用して、ユーザーがこの知識をgraniteモデルに追加し、追加の知識に基づいてトレーニングし、推奨事項を改善する方法を示します。</p>
+</div>
+<div class="sect2">
+<h3 id="using_parasol_application"><a class="anchor" href="#using_parasol_application"></a>3.1. Parasol アプリケーションの使用</h3>
+<div class="paragraph">
+<p>まず、請求担当者がチャットボットと対話する際の現在のエクスペリエンスを見てみましょう。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>現在 <strong>Terminals</strong> ビューにいる場合、<strong>Parasol</strong> (上部ターミナル ウィンドウの上の上部バー) に切り替えて、ブラウザーに Parasol のクレーム アプリケーションを表示します。</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-view.png" alt="parasol view">
+</div>
+</div>
+<div class="paragraph">
+<p>請求担当者は、画面上の請求番号をクリックすると、既存の請求に移動して表示できます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>このラボでは、Marty McFly によって提出された請求である <strong>CLM195501</strong> を調査します。この請求をクリックしてみましょう。</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-claim.png" alt="parasol claim">
+</div>
+</div>
+<div class="paragraph">
+<p>このページでは請求の詳細を見ることができます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>請求の内容を読んだら、ページの右下にある小さな青いアイコンを使用してチャットボットをクリックします。</p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-chat.webp" alt="parasol chat" width="350">
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+このチャットボットは、以前に提供した Granite モデルによってサポートされているため、実行中のプロセスを強制終了した場合は、次のコマンドを実行してターミナルで再起動する必要があります。 <code>ilab model serve --model-path /home/instruct/.cache/instructlab/models/granite-7b-lab-Q4_K_M.gguf</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>あなたが保険請求担当者として、マーティのデロリアンの磁束コンデンサの修理にどれくらいの費用がかかるかを知りたいと考えていると想像してください。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>チャットボットに次の質問をしてください。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">How much does it cost to repair a flux capacitor?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次のような内容が表示されるはずです。 LLM は本質的に非決定的であることに注意してください。これは、同じプロンプト入力であっても、モデルがさまざまな応答を生成することを意味します。したがって、結果は若干異なる場合があります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-chat-response.webp" alt="parasol chat response" width="350">
+</div>
+</div>
+<div class="paragraph">
+<p>私たちがすでに始めていることは、プロンプト エンジニアリングを使用して、LLM との各会話で請求に関するコンテキスト情報を提供することです。しかし、残念ながら、チャットボットは磁束コンデンサの修理にどれくらいの費用がかかるのか、または私たちの組織のドメイン固有の知識を知りません。</p>
+</div>
+<div class="paragraph">
+<p>InstructLab と RHEL AI を使用すると、モデルを教えることでこの状況を変えることができます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="taxonomy"><a class="anchor" href="#taxonomy"></a>3.2. 分類法（taxonomy）の理解</h3>
+<div class="paragraph">
+<p>InstructLab は、大規模言語モデル (LLM) に新しい合成データによるアライメント調整手法を使用します。InstructLab の「lab」は、<strong>L</strong>arge-scale <strong>A</strong>lignment for Chat <strong>B</strong>ots を表します。</p>
+</div>
+<div class="paragraph">
+<p>LAB メソッドは分類法によって駆動され、分類法は主に手作業で慎重に作成されます。</p>
+</div>
+<div class="paragraph">
+<p>InstructLab は、新しい InstructLab オープンソース コミュニティで知識とスキルという 2 種類のデータを収集することで、モデルのチューニングと改善のプロセスをクラウドソーシングします。それらの提供物は、分類されたYAML ファイルとして収集され、合成データ生成プロセスで使用されます。分類のディレクトリ構造を理解するには、次の画像を参照してください。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/taxonomy.png" alt="taxonomy">
+</div>
+</div>
+<div class="paragraph">
+<p>これから、分類モデルを活用して、組織の公開 (および非公開) 内部データのコレクションから、対象となる特定の車両とその詳細に関する知識をモデルに教えます。</p>
+</div>
+<div class="paragraph">
+<p><strong>Terminals</strong> ビューに戻り、チャットを実行しているターミナル ウィンドウで、「exit」と入力してチャット セッションを終了します。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>taxonomy ディレクトリに移動します。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cd /home/instruct/.local/share/instructlab
+tree taxonomy | head -n 10</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">以下に示すように分類ディレクトリがリストされているはずです。</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-texinfo hljs" data-lang="texinfo">taxonomy
+├── CODE_OF_CONDUCT.md
+├── compositional_skills
+│   ├── arts
+│   ├── engineering
+│   ├── geography
+│   ├── grounded
+│   │   ├── arts
+│   │   ├── engineering
+│   │   ├── geography</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次に、ファイルを配置できるディレクトリを作成する必要があります。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="2">
+<li>
+<p>新しい知識を追加するためのディレクトリを作成し、分類構造を適切に使用して InstructLab で知識を追加する方法を示します。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">mkdir -p /home/instruct/.local/share/instructlab/taxonomy/knowledge/parasol/claims</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="3">
+<li>
+<p>新しい知識を通じてモデルに新しい機能を追加します。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>分類アプローチが機能する方法は、質問と回答のサンプル データ セットを含む <code>qna.yaml</code> という名前のファイルを提供することです。このデータ セットは、モデルの出力に完全に影響を与えるのに十分な、さらに多くの合成データ サンプルを作成するプロセスで使用されます。  <code>qna.yaml</code> ファイルについて理解する重要な点は、InstructLab がそれを使用してより多くの例を合成的に生成するには、このファイルが特定のスキーマに従う必要があるということです。</p>
+</div>
+<div class="paragraph">
+<p><code>qna.yaml</code> ファイルは、分類ディレクトリの <code>knowledge</code> サブディレクトリ内のフォルダーに配置されます。以下のコマンドでわかるように、データ トピックに合わせた適切な名前のフォルダーに配置します。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="4">
+<li>
+<p>大量の情報を手で入力する代わりに、次のコマンドを実行して、サンプルの <a href="https://raw.githubusercontent.com/rhai-code/backToTheFuture/main/qna.yaml"><code>qna.yaml</code></a> ファイルを分類ディレクトリにコピーするだけです。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cp -av ~/files/backToTheFuture/qna.yaml /home/instruct/.local/share/instructlab/taxonomy/knowledge/parasol/claims/</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="5">
+<li>
+<p>次に、ファイルの最初の 10 行を表示する次のコマンドを発行して、ファイルが正しくコピーされたことを確認できます。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">head /home/instruct/.local/share/instructlab/taxonomy/knowledge/parasol/claims/qna.yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このワークショップでは、この情報をすべて手書きで入力することは期待されていません。参考のためにここに内容を記載します。</p>
+</div>
+<div class="paragraph">
+<p>これは、トレーナーモデルが学生モデルを指導するために使用する Q&amp;A サンプルのリストで構成される YAML ファイルです。 git 内のテキスト ファイルの特定のコミットへのリンクであるソース ドキュメントもあります。 <a href="https://github.com/gshipley/backToTheFuture/blob/main/data.md">ここ</a> に磁束コンデンサの手頃な価格が 10,000,000 ドルだということが含まれています。</p>
+</div>
+<div class="paragraph">
+<p>qna ファイル形式を理解しやすくするために、以下にファイルの抜粋を示します。次のコマンドを使用して、システム上のファイル全体を表示してください。</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cat /home/instruct/.local/share/instructlab/taxonomy/knowledge/parasol/claims/qna.yaml</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">version: 3
+domain: time_travel
+created_by: Marty McFly
+seed_examples:
+  - context: |
+      The DeLorean DMC-12 is a sports car manufactured by John DeLorean's DeLorean Motor Company
+      for the American market from 1981 to 1983. The car features gull-wing doors and a stainless-steel body.
+      It gained fame for its appearance as the time machine in the "Back to the Future" film trilogy.
+    questions_and_answers:
+      - question: |
+          When was the DeLorean manufactured?
+        answer: |
+          The DeLorean was manufactured from 1981 to 1983.
+      - question: |
+          Who manufactured the DeLorean DMC-12?
+        answer: |
+          The DeLorean Motor Company manufactured the DeLorean DMC-12.
+      - question: |
+          What type of doors does the DeLorean DMC-12 have?
+        answer: |
+          Gull-wing doors.
+document_outline: |
+  Details and repair costs on a DeLorean DMC-12 car.
+document:
+  repo: https://github.com/gshipley/backToTheFuture.git
+  commit: 8bd9220c616afe24b9673d94ec1adce85320809c
+  patterns:<i class="conum" data-value="6"></i><b>(6)</b>
+    - data.md</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code><strong>version</strong></code>: qna.yaml ファイルのバージョン。これは、SDG (Synthetic Data Generation) に使用されるファイルの形式です。値は数値 3 である必要があります。</p>
+</li>
+<li>
+<p><code><strong>created_by</strong></code>: 作者の GitHub ユーザー名</p>
+</li>
+<li>
+<p><code><strong>domain</strong></code>: ナレッジのカテゴリ</p>
+</li>
+<li>
+<p><code><strong>seed_examples</strong></code>: key/value エントリのコレクション</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code><strong>context</strong></code>: ナレッジ ドキュメントからの情報。各 qna.yaml には 5 つのコンテキスト ブロックが必要で、最大単語数は 500 単語です。</p>
+</li>
+<li>
+<p><code><strong>questions_and_answers</strong></code>: 質問と回答</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><code><strong>question</strong></code>: モデルに対する質問。各 qna.yaml ファイルには、コンテキスト チャンクごとに少なくとも 3 つの質問と回答のペアが必要で、最大単語数は 250 ワードです。</p>
+</li>
+<li>
+<p><code><strong>answer</strong></code>: モデルに対して要求される答え。各 qna.yaml ファイルには、コンテキスト チャンクごとに少なくとも 3 つの質問と回答のペアが必要で、最大単語数は 250 ワードです。</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code><strong>document_outline</strong></code>: 提出する書類の概要を説明します。</p>
+</li>
+<li>
+<p><code><strong>document</strong></code>: 知識貢献の情報源</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code><strong>repo</strong></code>: ナレッジ マークダウン ファイルを保持するリポジトリの URL</p>
+</li>
+<li>
+<p><code><strong>commit</strong></code>: ナレッジ マークダウン ファイルを含むリポジトリ内のコミットの SHA。</p>
+</li>
+<li>
+<p><code><strong>patterns</strong></code>: リポジトリ内のマークダウン ファイルを指定する glob パターンのリスト。 <strong>.md などの * で始まる glob パターンは、YAML ルールにより引用符で囲む必要があります。たとえば、</strong>.md です。</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>次に、シード データが適切にキュレーションされていることを確認します。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="6">
+<li>
+<p>分類法を検証する</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>InstructLab を使用すると、追加データを生成する前に分類ファイルを検証できます。これを行うには、以下に示すように <code>ilab Taxonomy diff</code> コマンドを使用します。:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+コマンド ラインの (venv) で示される仮想環境にまだいることを確認してください。そうでない場合は、venv/bin/activate ファイルを再度取得します。
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab taxonomy diff</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">You should see the following output:</div>
+<div class="content">
+<pre>knowledge/parasol/claims/qna.yaml
+Taxonomy in /home/instruct/.local/share/instructlab/taxonomy is valid :)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sdg"><a class="anchor" href="#sdg"></a>3.3. 合成データの生成</h3>
+<div class="paragraph">
+<p>さて、ここまでは順調です。さて、素晴らしい部分に移りましょう。 <code>qna.yaml</code> ファイルを含む分類法を使用して、LLM にさらに多くの例を自動的に生成させます。生成ステップには時間がかかることが多く、生成する命令の数によって異なります。</p>
+</div>
+<div class="paragraph">
+<p>InstructLab は、提供されたサンプルに基づいて X 個の追加の質問と回答を生成します。たとえば、デフォルトの完全合成データ生成パイプラインをスケール ファクター 30 で実行すると、7 分かかります。これは、Apple Silicon を使用すると約 15 分かかる場合があり、多くの要因によって異なります。時間を短縮するため、またはハードウェアの規模が小さい場合は、スケール係数をカスタマイズしたり、単純なパイプラインを実行したりすることもできますが、最適な出力が生成されないため、お勧めできません。</p>
+</div>
+<div class="paragraph">
+<p>ただし、このワークショップの目的では、どのように機能するかを理解していただくために、少量の追加サンプルのみを生成します。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+必要に応じて、Granite モデルを実行しているターミナルで <span class="keyseq"><kbd>CTRL</kbd>+<kbd>C</kbd></span> と入力して、Granite モデルの提供を停止します。
+</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>(**bottom** （2つ目）のターミナル) でコマンドを実行して、合成データを生成します。 merlinite モデルは **教師** モデルとして機能します。</pre>
+</div>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab data generate --model /home/instruct/.cache/instructlab/models/merlinite-7b-lab-Q4_K_M.gguf --sdg-scale-factor 5 --pipeline simple --gpus 1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このコマンドを実行すると、魔法が始まります。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+SDG プロセスが開始される前に <code>AssertionError</code> がスローされるのがわかります。これはプロセスには影響しませんので、安心して続行してください。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>InstructLab は現在、<code>qna.yaml</code> ファイルで提供されたシード データに基づいてデータを合成的に生成しています。</p>
+</div>
+<div class="paragraph">
+<p>以下に示すように、データが生成されていることを示す出力が画面に表示されます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>INFO 2024-10-21 02:01:23,450 instructlab.sdg.llmblock:51: LLM server supports batched inputs: False
+INFO 2024-10-21 02:01:23,450 instructlab.sdg.pipeline:197: Running block: gen_knowledge
+INFO 2024-10-21 02:01:23,450 instructlab.sdg.pipeline:198: Dataset({
+    features: ['icl_document', 'document', 'document_outline', 'domain', 'icl_query_1', 'icl_query_2', 'icl_query_3', 'icl_response_1', 'icl_response_2', 'icl_response_3'],
+    num_rows: 10
+})</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これは完了するまでに数分かかります。</p>
+</div>
+<div class="paragraph">
+<p>プロセスが完了し、追加のデータを生成したら、 <code>ilab model train</code> コマンドを使用して、このデータセットをモデルに組み込むことができます。</p>
+</div>
+<div class="paragraph">
+<p>生成されたデータを確認したい場合は、SDG プロセスによって、knowledge_train_msgs[TIMESTAMP].jsonl という名前の jsonl ファイルが <code>/home/instruct/.local/share/instructlab/datasets</code> ディレクトリに作成されます。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+JSONL ファイルは、それぞれが独自の行にある複数の JSON オブジェクトで構成されます。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>ぜひ探索してみてください。次のコマンドに正確なファイル名を入力する必要があります。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">cat /home/instruct/.local/share/instructlab/datasets/knowledge_train_msgs[YOUR_TIMESTAMP].jsonl</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+一般に、スケール係数 5 を使用しても、モデルの知識やスキルに効果的に影響を与えるのに十分な合成データはありません。ただし、このワークショップでは時間の制約があるため、実際のコマンドを使用してこれがどのように機能するかを簡単に説明することが目的です。通常、モデルを効果的にトレーニングするには、デフォルト値であるスケール係数 30 を使用します。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>新しいデータが生成されたら、次のステップは、更新された知識を使用してモデルをトレーニングすることです。これは、 <code>ilab model train</code> コマンドを使用して実行されます。</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+新しく生成されたデータを使用したトレーニングは、時間とリソースを大量に消費するタスクです。必要なエポック数、セーフテンサーのダウンロードのためのインターネット接続、その他の要因によっては、何時間もかかる場合があり、使用するハードウェアに大きく依存します。
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="changing_model"><a class="anchor" href="#changing_model"></a>4. InstructLab を使用した LLM の強化</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>このラボでは時間の制約があるため、実際にはモデルをトレーニングしません。これには、本格的な合成データ生成プロセスと、何時間もかかる可能性のあるトレーニングの実行が必要になります。おそらくお忙しいと思いますので、お待たせすることなく最終結果をご案内いたします。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>このプロセスをすでに経たモデルをデモ システムに提供しています。まず、いずれかのターミナル ウィンドウでプロセスが実行されている場合は、 <span class="keyseq"><kbd>CTRL</kbd>+<kbd>C</kbd></span> を入力して終了します。新しくトレーニングされたモデルを提供するために、<strong>top</strong> コマンド ウィンドウで次のコマンドを実行できるようになりました。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">ilab model serve --model-path /home/instruct/files/summit-connect-merlinite-lab-Q4.gguf</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>開始までに数秒かかる場合がありますが、次のような見覚えのあるものが表示されるはずです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>INFO 2024-10-20 17:24:33,497 instructlab.model.serve:136: Using model '/home/instruct/summit-connect-merlinite-lab-Q4.gguf' with -1 gpu-layers and 4096 max context size.
+INFO 2024-10-20 17:24:33,497 instructlab.model.serve:140: Serving model '/home/instruct/summit-connect-merlinite-lab-Q4.gguf' with llama-cpp
+INFO 2024-10-20 17:24:34,492 instructlab.model.backends.llama_cpp:232: Replacing chat template:
+ {% for message in messages %}
+{% if message['role'] == 'user' %}
+{{ '&lt;|user|&gt;
+' + message['content'] }}
+{% elif message['role'] == 'system' %}
+{{ '&lt;|system|&gt;
+' + message['content'] }}
+{% elif message['role'] == 'assistant' %}
+{{ '&lt;|assistant|&gt;
+' + message['content'] + eos_token }}
+{% endif %}
+{% if loop.last and add_generation_prompt %}
+{{ '&lt;|assistant|&gt;' }}
+{% endif %}
+{% endfor %}
+INFO 2024-10-20 17:24:34,495 instructlab.model.backends.llama_cpp:189: Starting server process, press CTRL+C to shutdown server...
+INFO 2024-10-20 17:24:34,495 instructlab.model.backends.llama_cpp:190: After application startup complete see http://127.0.0.1:8000/docs for API.</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="verify"><a class="anchor" href="#verify"></a>4.1. アプリケーションの検証</h3>
+<div class="paragraph">
+<p>さて、ここからが真実の瞬間だ。知識を追加し、合成データを生成し、モデルを再トレーニングしました。パラソル保険アプリケーションで Marty McFly の請求を表示していた <strong>ブラウザ ウィンドウを更新</strong> します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-view.png" alt="parasol view">
+</div>
+</div>
+<div class="paragraph">
+<p>画面の右下隅にある青いチャットボット アイコンをクリックしてチャットボットを開きます。すでに開いている場合は、チャット ウィンドウの左下隅にある小さな <kbd>+</kbd> ボタンを押して新しいセッションを開始する必要があります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-chat.webp" alt="parasol chat" width="350">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>新しくトレーニングされたモデルを使用してチャットボットに同じ質問をして、応答が改善されたかどうかを確認してみましょう。</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">How much does it cost to repair a flux capacitor?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>次のような内容が表示されるはずです (大規模言語モデルの性質により、出力が異なる場合があることに注意してください)。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/parasol-new-response.webp" alt="parasol new response" width="350">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>CONGRATULATIONS!</strong> Parasol 保険用のチャットボットをトレーニングしただけで、すべての保険請求担当者の生活が少し改善されます。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>5. 結論</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>WOOHOO!</strong> 若いパダワン、任務は完了しました。少し息を吸ってください。私たちはあなたを誇りに思います。あえて言えば、あなたは今 AI エンジニアです。おそらく次のステップは何なのか疑問に思われていると思いますので、いくつかの提案をさせてください。</p>
+</div>
+<div class="paragraph">
+<p>スキルと知識の両方を追加してプレイを始めてください。これはモデルに何か「新しい」ものを与えるためです。知らないデータの塊を与えて、それをもとにトレーニングします。 InstructLab でトレーニングされたモデルは、あなたの会社でどのように役立ちますか?最初にどの友達に自慢しますか?</p>
+</div>
+<div class="paragraph">
+<p>ご覧のとおり、InstructLab は非常に簡単で、ほとんどの時間は新しい分類コンテンツのキュレーションに費やされます。繰り返しになりますが、ここまで進んでいただいたことをとてもうれしく思います。ご質問があれば、私たちがお手伝いいたします。皆さんが何を思いつくか楽しみにしています。</p>
+</div>
+<div class="paragraph">
+<p>アップストリーム コミュニティに参加する方法については、公式プロジェクト (<a href="https://github.com/instructlab">www.github.com/instructlab</a>) にアクセスし、コミュニティ リポジトリをチェックしてください。また、RHEL AI の詳細については、 <a href="https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux/ai">こちら</a> をご覧ください(RHEL AIには、InstructLab のサポート、含まれる Granite 大規模言語モデルのモデル出力の識別化、ハイブリッド クラウド上で独自の方法で AI を実行するプラットフォームが含まれます）。</p>
+</div>
+</div>
+</div>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>  </div>
+</main>
+</div>
+<footer class="footer">
+  <a href="https://demo.redhat.com" target="_blank" class="poweredBy"><p>Powered by</p><div class="labInfo_poweredBy" style="display: block; width: 260px;"><svg class="labInfo_poweredByLogo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1508.5 178.739"><g fill="#111"><path d="M316.6 63.2v-56H342a21.279 21.279 0 0 1 7.8 1.3 18.111 18.111 0 0 1 5.9 3.5 15.577 15.577 0 0 1 5 11.8 15.051 15.051 0 0 1-3.1 9.5 16.836 16.836 0 0 1-8.4 5.8l12.5 24.1h-9.3l-11.6-23H325v23Zm24.7-48.6H325v18.7h16.3q5.25 0 8.1-2.7a8.7 8.7 0 0 0 2.8-6.6 8.7 8.7 0 0 0-2.8-6.6c-1.8-1.9-4.5-2.8-8.1-2.8ZM364.1 42.8a20.674 20.674 0 0 1 1.6-8.2 20.288 20.288 0 0 1 4.3-6.7 19.92 19.92 0 0 1 6.5-4.5 19.718 19.718 0 0 1 8-1.6 18.463 18.463 0 0 1 7.8 1.6 18.677 18.677 0 0 1 6.2 4.5 20.927 20.927 0 0 1 4.1 6.8 23.2 23.2 0 0 1 1.5 8.4v2.3H372a13.822 13.822 0 0 0 4.6 8.4 13.6 13.6 0 0 0 9.1 3.3 15.553 15.553 0 0 0 5.7-1 12.858 12.858 0 0 0 4.6-2.6l5.1 5a25.983 25.983 0 0 1-7.4 4.1 24.69 24.69 0 0 1-8.4 1.3 21.306 21.306 0 0 1-8.4-1.6 22.763 22.763 0 0 1-6.8-4.4 20.788 20.788 0 0 1-4.5-6.7 23.2 23.2 0 0 1-1.5-8.4Zm20.2-14.2a11.527 11.527 0 0 0-8 3 13.046 13.046 0 0 0-4.2 7.8h24.2a13.091 13.091 0 0 0-4.2-7.8 11.106 11.106 0 0 0-7.8-3ZM443.1 63.2v-3.8a19.448 19.448 0 0 1-5.8 3.3 18.924 18.924 0 0 1-6.7 1.2 19.824 19.824 0 0 1-14.6-6.1 22.268 22.268 0 0 1-4.4-6.7 21.812 21.812 0 0 1 0-16.4A20.534 20.534 0 0 1 416 28a19.335 19.335 0 0 1 6.6-4.5 20.334 20.334 0 0 1 8.2-1.6 20.7 20.7 0 0 1 6.6 1 19.415 19.415 0 0 1 5.7 3V7.2l8-1.8v57.8Zm-25.2-20.4a13.718 13.718 0 0 0 4 10.1 13.45 13.45 0 0 0 9.8 4.1 14.956 14.956 0 0 0 6.4-1.3 15.954 15.954 0 0 0 4.9-3.6V33.6a14.988 14.988 0 0 0-4.9-3.5 15.271 15.271 0 0 0-6.4-1.3 13.423 13.423 0 0 0-9.9 4 13.806 13.806 0 0 0-3.9 10ZM478.1 63.2v-56h8.4v24h29.8v-24h8.4v56h-8.4V38.8h-29.8v24.4ZM547.2 64a16.483 16.483 0 0 1-10.8-3.5 11.037 11.037 0 0 1-4.2-8.9 10.375 10.375 0 0 1 4.7-9.2 20.76 20.76 0 0 1 11.8-3.2 27.841 27.841 0 0 1 5.8.6 27.374 27.374 0 0 1 5.3 1.6v-4.3a8.143 8.143 0 0 0-2.6-6.5 11.452 11.452 0 0 0-7.4-2.2 20.788 20.788 0 0 0-6 .9 34.616 34.616 0 0 0-6.6 2.6l-3-6a54.169 54.169 0 0 1 8.4-3.1 33.18 33.18 0 0 1 8.3-1.1c5.2 0 9.3 1.3 12.2 3.8s4.4 6.1 4.4 10.8v27h-7.8v-3.5a19.441 19.441 0 0 1-5.8 3.2 23.54 23.54 0 0 1-6.7 1Zm-7.3-12.6a5.646 5.646 0 0 0 2.6 4.8 11.193 11.193 0 0 0 6.6 1.8 16.256 16.256 0 0 0 5.9-1 14.449 14.449 0 0 0 4.9-2.9V47a19.778 19.778 0 0 0-4.8-1.8 24.933 24.933 0 0 0-5.7-.6 11.859 11.859 0 0 0-6.8 1.8 5.728 5.728 0 0 0-2.7 5ZM580.6 53.2v-24H572v-6.7h8.6V12.1l7.9-1.9v12.3h12v6.7h-12v22.1a5.94 5.94 0 0 0 1.4 4.4c.9.9 2.5 1.3 4.6 1.3a23.637 23.637 0 0 0 3-.2 10.857 10.857 0 0 0 2.8-.8v6.7a19.28 19.28 0 0 1-3.8.9 27.484 27.484 0 0 1-3.8.3c-3.9 0-7-.9-9-2.8-2-1.7-3.1-4.4-3.1-7.9Z"></path></g><path d="M127 90.2c12.5 0 30.6-2.6 30.6-17.5a12.678 12.678 0 0 0-.3-3.4L149.8 37c-1.7-7.1-3.2-10.3-15.7-16.6-9.7-5-30.8-13.1-37.1-13.1-5.8 0-7.5 7.5-14.4 7.5-6.7 0-11.6-5.6-17.9-5.6-6 0-9.9 4.1-12.9 12.5 0 0-8.4 23.7-9.5 27.2a4.216 4.216 0 0 0-.3 1.9c0 9.2 36.3 39.4 85 39.4Zm32.5-11.4c1.7 8.2 1.7 9.1 1.7 10.1 0 14-15.7 21.8-36.4 21.8-46.8 0-87.7-27.4-87.7-45.5a17.535 17.535 0 0 1 1.5-7.3C21.8 58.8 0 61.8 0 81c0 31.5 74.6 70.3 133.7 70.3 45.3 0 56.7-20.5 56.7-36.6-.1-12.8-11-27.3-30.9-35.9Z" fill="#e00"></path><path d="M159.5 78.8c1.7 8.2 1.7 9.1 1.7 10.1 0 14-15.7 21.8-36.4 21.8-46.8 0-87.7-27.4-87.7-45.5a17.535 17.535 0 0 1 1.5-7.3l3.7-9.1a4.877 4.877 0 0 0-.3 2c0 9.2 36.3 39.4 85 39.4 12.5 0 30.6-2.6 30.6-17.5a12.678 12.678 0 0 0-.3-3.4Z"></path><path d="M253.5 158.7a2.22 2.22 0 0 1-2.2-2.2V2.2a2.2 2.2 0 0 1 4.4 0v154.2a2.242 2.242 0 0 1-2.2 2.3Z" fill="#111"></path><text data-name="Demo Platform" transform="translate(1186 149)" fill="#111" font-size="82" font-family="'RedHatDisplay', 'Overpass', overpass, helvetica, arial, sans-serif" font-weight="700"><tspan x="-877.892" y="0">Demo Platform</tspan></text></svg></div></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
