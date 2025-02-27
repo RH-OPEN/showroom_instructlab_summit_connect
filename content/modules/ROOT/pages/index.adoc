@@ -524,7 +524,7 @@ InstructLab は、提供されたサンプルに基づいて X 個の追加の�
 
 NOTE: 必要に応じて、Granite モデルを実行しているターミナルで kbd:[CTRL+C] と入力して、Granite モデルの提供を停止します。
 
- (**bottom** （2つ目）のターミナル) でコマンドを実行して、合成データを生成します。 merlinite モデルは **教師** モデルとして機能します。
+（**bottom** （2つ目）のターミナル）でコマンドを実行して、合成データを生成します。 merlinite モデルは **教師** モデルとして機能します。
 
 [source,console,role=execute,subs=attributes+]
 ----
