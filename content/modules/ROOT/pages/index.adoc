@@ -197,14 +197,14 @@ NOTE: このラボでは 1 つの GPU のみを利用しているため、量子
 
 [source,console,role=execute,subs=attributes+]
 ----
-ilab model download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf
+ilab model download --repository instructlab/granite-7b-lab-GGUF --filename=granite-7b-lab-Q4_K_M.gguf --hf-token $HUGGINGFACE_RO_TOKEN
 ----
 
 One more time, let's pull down Merlinite:
 
 [source,console,role=execute,subs=attributes+]
 ----
-ilab model download --repository instructlab/merlinite-7b-lab-GGUF --filename=merlinite-7b-lab-Q4_K_M.gguf
+ilab model download --repository instructlab/merlinite-7b-lab-GGUF --filename=merlinite-7b-lab-Q4_K_M.gguf --hf-token $HUGGINGFACE_RO_TOKEN
 ----
 
 `ilab model download` コマンドは、このワークショップで使用するモデルを HuggingFaceのinstructlab 組織からダウンロードします。出力は次のようになります。
